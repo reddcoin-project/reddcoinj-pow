@@ -18,6 +18,7 @@ package com.google.bitcoin.core;
 
 import com.google.common.base.Charsets;
 import com.google.common.primitives.UnsignedLongs;
+import com.lambdaworks.crypto.SCrypt;
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 import org.spongycastle.util.encoders.Hex;
 
@@ -195,6 +196,14 @@ public class Utils {
             digest.update(input, offset, length);
             byte[] first = digest.digest();
             return digest.digest(first);
+        }
+    }
+
+    public static byte[] scryptDigest(byte[] input) {
+    try {
+        return SCrypt.scrypt(input, input, 1024, 1, 1, 32);
+        } catch (Exception e) {
+            return null;
         }
     }
 

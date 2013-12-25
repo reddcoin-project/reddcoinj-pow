@@ -6732,13 +6732,13 @@ public final class Protos {
      * <pre>
      **
      * This is a bitfield oriented enum, with the following bits:
-     * 
+     *
      * bit 0 - spent
      * bit 1 - appears in alt chain
      * bit 2 - appears in best chain
      * bit 3 - double-spent
      * bit 4 - pending (we would like the tx to go into the best chain)
-     * 
+     *
      * Not all combinations are interesting, just the ones actually used in the enum.
      * </pre>
      */
