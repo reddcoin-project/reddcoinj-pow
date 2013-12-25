@@ -30,7 +30,7 @@ public class MainNetParams extends NetworkParameters {
         super();
         interval = INTERVAL;
         targetTimespan = TARGET_TIMESPAN;
-        proofOfWorkLimit = Utils.decodeCompactBits(0x1d00ffffL);
+        proofOfWorkLimit = Utils.decodeCompactBits(0x1e0fffffL);
         dumpedPrivateKeyHeader = 158; //This is always addressHeader + 128
         addressHeader = 30;
         //p2shHeader = 5; //We don't have this
@@ -62,7 +62,8 @@ public class MainNetParams extends NetworkParameters {
                 /*"seed.bitcoin.sipa.be",        // Pieter Wuille
                 "dnsseed.bluematt.me",         // Matt Corallo
                 "dnsseed.bitcoin.dashjr.org",  // Luke Dashjr*/
-                //TODO Would be nice if Dogecoin gets them... Until then we rely on IRC nodes.
+                "seed.dogeftw.com",
+                //TODO Add more...
         };
     }
 
