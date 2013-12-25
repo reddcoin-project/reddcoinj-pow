@@ -530,24 +530,14 @@ public class Block extends Message {
         return getHash().toString();
     }
 
-    public String getScryptHashAsString() {
-        return getScryptHash().toString();
-    }
-
     /**
      * Returns the hash of the block (which for a valid, solved block should be
      * below the target). Big endian.
      */
     public Sha256Hash getHash() {
         if (hash == null)
-            hash = calculateHash();
+            hash = calculateScryptHash();
         return hash;
-    }
-
-    public Sha256Hash getScryptHash() {
-        if (scryptHash == null)
-                scryptHash = calculateScryptHash();
-        return scryptHash;
     }
 
     /**
@@ -666,7 +656,7 @@ public class Block extends Message {
         // field is of the right value. This requires us to have the preceeding blocks.
         BigInteger target = getDifficultyTargetAsInteger();
 
-        BigInteger h = getScryptHash().toBigInteger();
+        BigInteger h = getHash().toBigInteger();
         if (h.compareTo(target) > 0) {
             // Proof of work check failed!
             if (throwException)
