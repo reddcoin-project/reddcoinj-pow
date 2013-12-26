@@ -78,6 +78,7 @@ public class PrintPeers {
 
         List<ListenableFuture<Void>> futures = Lists.newArrayList();
         NioClientManager clientManager = new NioClientManager();
+        clientManager.start();
         for (final InetAddress addr : addrs) {
             final Peer peer = new Peer(params, new VersionMessage(params, 0), null, new InetSocketAddress(addr, params.getPort()));
             final SettableFuture future = SettableFuture.create();

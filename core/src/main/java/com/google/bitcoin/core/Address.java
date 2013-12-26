@@ -17,7 +17,6 @@
 package com.google.bitcoin.core;
 
 import com.google.bitcoin.params.MainNetParams;
-import com.google.bitcoin.params.TestNet3Params;
 import com.google.bitcoin.script.Script;
 
 import javax.annotation.Nullable;
@@ -124,7 +123,8 @@ public class Address extends VersionedChecksummedBytes {
     @Nullable
     public NetworkParameters getParameters() {
         // TODO: There should be a more generic way to get all supported networks.
-        NetworkParameters[] networks = { TestNet3Params.get(), MainNetParams.get() };
+        // FIXME: we have no testnet for now NetworkParameters[] networks = { TestNet3Params.get(), MainNetParams.get() };
+        NetworkParameters[] networks = { MainNetParams.get() };
         for (NetworkParameters params : networks) {
             if (isAcceptableVersion(params, version)) {
                 return params;
