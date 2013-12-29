@@ -40,7 +40,7 @@ public class BuildCheckpoints {
         long now = new Date().getTime() / 1000;
         peerGroup.setFastCatchupTimeSecs(now);
 
-        final long oneMonthAgo = now - (86400 * 7);
+        final long oneMonthAgo = now - (86400 * 14); //TODO: Make it higher later on
 
         chain.addListener(new AbstractBlockChainListener() {
             @Override
@@ -60,7 +60,7 @@ public class BuildCheckpoints {
         checkState(checkpoints.size() > 0);
 
         // Write checkpoint data out.
-        final FileOutputStream fileOutputStream = new FileOutputStream("dogecoin-checkpoints", false);
+        final FileOutputStream fileOutputStream = new FileOutputStream("checkpoints", false);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         final DigestOutputStream digestOutputStream = new DigestOutputStream(fileOutputStream, digest);
         digestOutputStream.on(false);
@@ -87,8 +87,8 @@ public class BuildCheckpoints {
         // Sanity check the created file.
         CheckpointManager manager = new CheckpointManager(params, new FileInputStream("checkpoints"));
         checkState(manager.numCheckpoints() == checkpoints.size());
-        StoredBlock test = manager.getCheckpointBefore(1348310800);  // Just after block 200,000
-        checkState(test.getHeight() == 199584);
-        checkState(test.getHeader().getHashAsString().equals("000000000000002e00a243fe9aa49c78f573091d17372c2ae0ae5e0f24f55b52"));
+        StoredBlock test = manager.getCheckpointBefore(1386664400);  // Just after block 4571
+        checkState(test.getHeight() == 4560);
+        checkState(test.getHeader().getHashAsString().equals("0158aab19442930f6070314c90679e067f9065d335585b45fc68d62074d4ae66"));
     }
 }
