@@ -848,7 +848,7 @@ public abstract class AbstractBlockChain {
             if (timespan > targetTimespan * 4)
                 timespan = targetTimespan * 4;
         }
-        else if (storedPrev.getHeight()+1 > 10000)
+        else if (storedPrev.getHeight()+1 > 5000)
         {
             if (timespan < targetTimespan / 8)
                 timespan = targetTimespan / 8;
