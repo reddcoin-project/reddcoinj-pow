@@ -658,10 +658,10 @@ public class PeerGroup extends AbstractIdleService implements TransactionBroadca
                     chain.resetFalsePositiveEstimate();
                 }
             }
-            // Now adjust the earliest key time backwards by a week to handle the case of clock drift. This can occur
+            // Now adjust the earliest key time backwards by 3 days to handle the case of clock drift. This can occur
             // both in block header timestamps and if the users clock was out of sync when the key was first created
             // (to within a small amount of tolerance).
-            earliestKeyTimeSecs -= 86400 * 7;
+            earliestKeyTimeSecs -= 86400 * 3; //TODO DOGE is stull yound, we can make it higher later. Makes blockchain sync way faster for new users.
 
             // Do this last so that bloomFilter is already set when it gets called.
             setFastCatchupTimeSecs(earliestKeyTimeSecs);
