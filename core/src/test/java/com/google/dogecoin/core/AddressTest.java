@@ -27,35 +27,35 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class AddressTest {
-    static final NetworkParameters testParams = TestNet3Params.get();
+    //static final NetworkParameters testParams = TestNet3Params.get();
     static final NetworkParameters mainParams = MainNetParams.get();
 
     @Test
     public void stringification() throws Exception {
         // Test a testnet address.
-        Address a = new Address(testParams, Hex.decode("fda79a24e50ff70ff42f7d89585da5bd19d9e5cc"));
+/*        Address a = new Address(testParams, Hex.decode("fda79a24e50ff70ff42f7d89585da5bd19d9e5cc"));
         assertEquals("n4eA2nbYqErp7H6jebchxAN59DmNpksexv", a.toString());
-        assertFalse(a.isP2SHAddress());
+        assertFalse(a.isP2SHAddress());*/ //TODO: No Testnet info...
 
-        Address b = new Address(mainParams, Hex.decode("4a22c3c4cbb31e4d03b15550636762bda0baf85a"));
-        assertEquals("17kzeh4N8g49GFvdDzSf8PjaPfyoD1MndL", b.toString());
-        assertFalse(b.isP2SHAddress());
+        Address b = new Address(mainParams, Hex.decode("908f4849864c54dadc24bf01c0c2dcd7180fd038"));
+        assertEquals("DJKTVKGSDp5aUQzgtWyhbMtsXvW8s2vVRU", b.toString());
+        //assertFalse(b.isP2SHAddress());
     }
     
     @Test
     public void decoding() throws Exception {
-        Address a = new Address(testParams, "n4eA2nbYqErp7H6jebchxAN59DmNpksexv");
-        assertEquals("fda79a24e50ff70ff42f7d89585da5bd19d9e5cc", Utils.bytesToHexString(a.getHash160()));
+/*        Address a = new Address(testParams, "n4eA2nbYqErp7H6jebchxAN59DmNpksexv");
+        assertEquals("fda79a24e50ff70ff42f7d89585da5bd19d9e5cc", Utils.bytesToHexString(a.getHash160()));*/ //TODO Testnet.
 
-        Address b = new Address(mainParams, "17kzeh4N8g49GFvdDzSf8PjaPfyoD1MndL");
-        assertEquals("4a22c3c4cbb31e4d03b15550636762bda0baf85a", Utils.bytesToHexString(b.getHash160()));
+        Address b = new Address(mainParams, "DJKTVKGSDp5aUQzgtWyhbMtsXvW8s2vVRU");
+        assertEquals("908f4849864c54dadc24bf01c0c2dcd7180fd038", Utils.bytesToHexString(b.getHash160()));
     }
     
     @Test
     public void errorPaths() {
         // Check what happens if we try and decode garbage.
         try {
-            new Address(testParams, "this is not a valid address!");
+            new Address(mainParams, "this is not a valid address!");
             fail();
         } catch (WrongNetworkException e) {
             fail();
@@ -65,7 +65,7 @@ public class AddressTest {
 
         // Check the empty case.
         try {
-            new Address(testParams, "");
+            new Address(mainParams, "");
             fail();
         } catch (WrongNetworkException e) {
             fail();
@@ -73,9 +73,9 @@ public class AddressTest {
             // Success.
         }
 
-        // Check the case of a mismatched network.
+/*        // Check the case of a mismatched network.
         try {
-            new Address(testParams, "17kzeh4N8g49GFvdDzSf8PjaPfyoD1MndL");
+            new Address(mainParams, "17kzeh4N8g49GFvdDzSf8PjaPfyoD1MndL");
             fail();
         } catch (WrongNetworkException e) {
             // Success.
@@ -83,18 +83,18 @@ public class AddressTest {
             assertTrue(Arrays.equals(e.acceptableVersions, TestNet3Params.get().getAcceptableAddressCodes()));
         } catch (AddressFormatException e) {
             fail();
-        }
+        }*/ //TODO testnet -.-
     }
     
     @Test
     public void getNetwork() throws Exception {
-        NetworkParameters params = Address.getParametersFromAddress("17kzeh4N8g49GFvdDzSf8PjaPfyoD1MndL");
+        NetworkParameters params = Address.getParametersFromAddress("DJKTVKGSDp5aUQzgtWyhbMtsXvW8s2vVRU");
         assertEquals(MainNetParams.get().getId(), params.getId());
-        params = Address.getParametersFromAddress("n4eA2nbYqErp7H6jebchxAN59DmNpksexv");
-        assertEquals(TestNet3Params.get().getId(), params.getId());
+/*        params = Address.getParametersFromAddress("n4eA2nbYqErp7H6jebchxAN59DmNpksexv");
+        assertEquals(TestNet3Params.get().getId(), params.getId());*/
     }
     
-    @Test
+/*    @Test //Doge doesn't have this.
     public void p2shAddress() throws Exception {
         // Test that we can construct P2SH addresses
         Address mainNetP2SHAddress = new Address(MainNetParams.get(), "35b9vsyH1KoFT5a5KtrKusaCcPLkiSo1tU");
@@ -118,5 +118,5 @@ public class AddressTest {
         assertEquals("2MuVSxtfivPKJe93EC1Tb9UhJtGhsoWEHCe", b.toString());
         Address c = Address.fromP2SHScript(mainParams, ScriptBuilder.createP2SHOutputScript(hex));
         assertEquals("35b9vsyH1KoFT5a5KtrKusaCcPLkiSo1tU", c.toString());
-    }
+    }*/
 }

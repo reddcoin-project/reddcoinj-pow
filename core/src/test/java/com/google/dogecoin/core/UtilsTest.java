@@ -88,7 +88,7 @@ public class UtilsTest {
         assertEquals("654321.123456", bitcoinValueToPlainString(toNanoCoins("654321.123456")));
         assertEquals("7654321.1234567", bitcoinValueToPlainString(toNanoCoins("7654321.1234567")));
         try {
-            assertEquals("87654321.12345678", bitcoinValueToPlainString(toNanoCoins("87654321.12345678")));
+            assertEquals("87654321999999.12345678", bitcoinValueToPlainString(toNanoCoins("87654321999999.12345678")));
             Assert.fail();  // More than MAX_MONEY
         } catch (Exception e) {}
 
