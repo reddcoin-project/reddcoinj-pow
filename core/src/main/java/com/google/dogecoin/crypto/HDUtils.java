@@ -16,7 +16,7 @@
 
 package com.google.dogecoin.crypto;
 
-import com.google.bitcoin.core.ECKey;
+import com.google.dogecoin.core.ECKey;
 import com.google.common.collect.ImmutableList;
 import org.spongycastle.crypto.digests.SHA512Digest;
 import org.spongycastle.crypto.macs.HMac;

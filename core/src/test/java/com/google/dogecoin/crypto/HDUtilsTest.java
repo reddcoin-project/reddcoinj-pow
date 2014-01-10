@@ -1,6 +1,6 @@
 package com.google.dogecoin.crypto;
 
-import com.google.bitcoin.core.ECKey;
+import com.google.dogecoin.core.ECKey;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
