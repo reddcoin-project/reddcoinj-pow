@@ -143,6 +143,13 @@ public class Peer extends PeerSocketHandler {
     // A settable future which completes (with this) when the connection is open
     private final SettableFuture<Peer> connectionOpenFuture = SettableFuture.create();
 
+    // A minimum needed block height to allow the implementation to connect to a peer.
+    // This is needed as many nodes run an old version and supply users with a wrong
+    // fork. As dogecoin didn't change the version message to distinguish client versions,
+    // we must resort to this "hack". We set it to 50k although the fork happened around 42k.
+    // This way we are sure not to kill nodes which are currently catching up themselves.
+    private final long MIN_PEER_BLOCK_HEIGHT = 50000;
+
     /**
      * <p>Construct a peer that reads/writes from the given block chain.</p>
      *
@@ -349,6 +356,12 @@ public class Peer extends PeerSocketHandler {
             if (vPeerVersionMessage.clientVersion < version) {
                 log.warn("Connected to a peer speaking protocol version {} but need {}, closing",
                         vPeerVersionMessage.clientVersion, version);
+                close();
+            }
+            if (vPeerVersionMessage.bestHeight < MIN_PEER_BLOCK_HEIGHT)
+            {
+                log.warn("Connected to a peer with just {} blocks. Don't accept it.",
+                        vPeerVersionMessage.bestHeight);
                 close();
             }
         } else if (m instanceof Ping) {
