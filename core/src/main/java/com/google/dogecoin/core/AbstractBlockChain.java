@@ -835,6 +835,14 @@ public abstract class AbstractBlockChain {
             }
             cursor = blockStore.get(cursor.getHeader().getPrevBlockHash());
         }
+
+        //We used checkpoints...
+        if(cursor == null)
+        {
+            log.debug("Difficulty transition: Hit checkpoint!");
+            return;
+        }
+
         long elapsed = System.currentTimeMillis() - now;
         if (elapsed > 50)
             log.info("Difficulty transition traversal took {}msec", elapsed);
