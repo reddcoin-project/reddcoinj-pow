@@ -64,9 +64,8 @@ public class PeerMonitor {
         params = MainNetParams.get();
         peerGroup = new PeerGroup(params, null /* no chain */);
         peerGroup.setUserAgent("PeerMonitor", "1.0");
-        peerGroup.setMaxConnections(4);
+        peerGroup.setMaxConnections(15);
         peerGroup.addPeerDiscovery(new DnsDiscovery(params));
-        peerGroup.setMinRequiredProtocolVersion(MainNetParams.PROTOCOL_VERSION);
         peerGroup.addEventListener(new AbstractPeerEventListener() {
             @Override
             public void onPeerConnected(final Peer peer, int peerCount) {
