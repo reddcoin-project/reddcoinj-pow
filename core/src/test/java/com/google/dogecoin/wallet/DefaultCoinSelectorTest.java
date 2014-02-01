@@ -17,6 +17,7 @@
 package com.google.dogecoin.wallet;
 
 import com.google.dogecoin.core.*;
+import com.google.dogecoin.params.RegTestParams;
 import com.google.dogecoin.params.UnitTestParams;
 import com.google.dogecoin.utils.TestUtils;
 import com.google.dogecoin.utils.TestWithWallet;
@@ -60,6 +61,10 @@ public class DefaultCoinSelectorTest extends TestWithWallet {
         assertTrue(DefaultCoinSelector.isSelectable(t));
         t = new Transaction(params);
         t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.BUILDING);
+        assertTrue(DefaultCoinSelector.isSelectable(t));
+        t = new Transaction(RegTestParams.get());
+        t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.PENDING);
+        t.getConfidence().setSource(TransactionConfidence.Source.SELF);
         assertTrue(DefaultCoinSelector.isSelectable(t));
     }
 

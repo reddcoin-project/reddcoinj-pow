@@ -19,6 +19,7 @@ package com.google.dogecoin.core;
 import com.google.dogecoin.params.UnitTestParams;
 import com.google.dogecoin.net.BlockingClientManager;
 import com.google.dogecoin.net.NioClientManager;
+import com.google.dogecoin.params.UnitTestParams;
 import com.google.dogecoin.store.BlockStore;
 import com.google.dogecoin.utils.ExponentialBackoff;
 import com.google.common.base.Preconditions;
@@ -50,7 +51,7 @@ public class TestWithPeerGroup extends TestWithNetworkConnections {
 
         remoteVersionMessage = new VersionMessage(unitTestParams, 1);
         remoteVersionMessage.localServices = VersionMessage.NODE_NETWORK;
-        remoteVersionMessage.clientVersion = FilteredBlock.MIN_PROTOCOL_VERSION;
+        remoteVersionMessage.clientVersion = NotFoundMessage.MIN_PROTOCOL_VERSION;
         initPeerGroup();
     }
 
