@@ -118,6 +118,8 @@ public class Peer extends PeerSocketHandler {
     private final HashSet<Sha256Hash> pendingBlockDownloads = new HashSet<Sha256Hash>();
     // The lowest version number we're willing to accept. Lower than this will result in an immediate disconnect.
     private volatile int vMinProtocolVersion = Pong.MIN_PROTOCOL_VERSION;
+    // A string to be checked inside the subversion to distinguis true 70001 nodes from 1.4.2 nodes.
+    private String ACCEPTED_SUBVERSION = "Shibetoshi";
     // When an API user explicitly requests a block or transaction from a peer, the InventoryItem is put here
     // whilst waiting for the response. Is not used for downloads Peer generates itself.
     private static class GetDataRequest {
@@ -143,11 +145,9 @@ public class Peer extends PeerSocketHandler {
     private final SettableFuture<Peer> connectionOpenFuture = SettableFuture.create();
 
     // A minimum needed block height to allow the implementation to connect to a peer.
-    // This is needed as many nodes run an old version and supply users with a wrong
-    // fork. As dogecoin didn't change the version message to distinguish client versions,
-    // we must resort to this "hack". We set it to 50k although the fork happened around 42k.
-    // This way we are sure not to kill nodes which are currently catching up themselves.
-    private final long MIN_PEER_BLOCK_HEIGHT = 50000;
+    // This prevents us from running onto the wrong side of the Feb '14 fork.
+    // It happened around block 104700 or so. Give it a bit more room.
+    private final long MIN_PEER_BLOCK_HEIGHT = 105000;
 
     /**
      * <p>Construct a peer that reads/writes from the given block chain.</p>
@@ -362,6 +362,12 @@ public class Peer extends PeerSocketHandler {
                 log.warn("Connected to a peer with just {} blocks. Don't accept it.",
                         vPeerVersionMessage.bestHeight);
                 close();
+            }
+            if (!vPeerVersionMessage.subVer.contains(ACCEPTED_SUBVERSION))
+            {
+                log.warn("Connected to a peer with subVer {}. Don't accept it.",
+                        vPeerVersionMessage.subVer);
+                e.getChannel().close();
             }
         } else if (m instanceof Ping) {
             if (((Ping) m).hasNonce())
