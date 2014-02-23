@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
 
-import static com.google.dogecoin.core.Utils.*;
+import static com.google.reddcoin.core.Utils.*;
 import static org.junit.Assert.*;
 
 public class UtilsTest {

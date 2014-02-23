@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.*;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptOpCodes;
+import com.google.reddcoin.params.*;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.script.ScriptOpCodes;
 import com.google.common.base.Objects;
 import org.spongycastle.util.encoders.Hex;
 
@@ -29,7 +29,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.dogecoin.core.Utils.COIN;
+import static com.google.reddcoin.core.Utils.COIN;
 
 /**
  * <p>NetworkParameters contains the data needed for working with an instantiation of a Bitcoin chain.</p>
@@ -51,11 +51,11 @@ public abstract class NetworkParameters implements Serializable {
     public static final byte[] SATOSHI_KEY = Hex.decode("04fc9702847840aaf195de8442ebecedf5b095cdbb9bc716bda9110971b28a49e0ead8564ff0db22209e0374782c093bb899692d524e9d6a6956e7c5ecbcd68284");
 
     /** The string returned by getId() for the main, production network where people trade things. */
-    public static final String ID_MAINNET = "org.dogecoin.production";
+    public static final String ID_MAINNET = "org.reddcoin.production";
     /** The string returned by getId() for the testnet. */
-    public static final String ID_TESTNET = "org.dogecoin.test";
+    public static final String ID_TESTNET = "org.reddcoin.test";
     /** Unit test network. */
-    public static final String ID_UNITTESTNET = "com.google.dogecoin.unittest";
+    public static final String ID_UNITTESTNET = "com.google.reddcoin.unittest";
 
     /** The string used by the payment protocol to represent the main net. */
     public static final String PAYMENT_PROTOCOL_ID_MAINNET = "main";
@@ -273,7 +273,7 @@ public abstract class NetworkParameters implements Serializable {
     }
 
     /**
-     * First byte of a base58 encoded address. See {@link com.google.dogecoin.core.Address}. This is the same as acceptableAddressCodes[0] and
+     * First byte of a base58 encoded address. See {@link com.google.reddcoin.core.Address}. This is the same as acceptableAddressCodes[0] and
      * is the one used for "normal" addresses. Other types of address may be encountered with version codes found in
      * the acceptableAddressCodes array.
      */
@@ -288,7 +288,7 @@ public abstract class NetworkParameters implements Serializable {
         return p2shHeader;
     }
 
-    /** First byte of a base58 encoded dumped private key. See {@link com.google.dogecoin.core.DumpedPrivateKey}. */
+    /** First byte of a base58 encoded dumped private key. See {@link com.google.reddcoin.core.DumpedPrivateKey}. */
     public int getDumpedPrivateKeyHeader() {
         return dumpedPrivateKeyHeader;
     }
@@ -329,7 +329,7 @@ public abstract class NetworkParameters implements Serializable {
     }
 
     /**
-     * The key used to sign {@link com.google.dogecoin.core.AlertMessage}s. You can use {@link com.google.dogecoin.core.ECKey#verify(byte[], byte[], byte[])} to verify
+     * The key used to sign {@link com.google.reddcoin.core.AlertMessage}s. You can use {@link com.google.reddcoin.core.ECKey#verify(byte[], byte[], byte[])} to verify
      * signatures using it.
      */
     public byte[] getAlertSigningKey() {

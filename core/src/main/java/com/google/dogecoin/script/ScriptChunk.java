@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.script;
+package com.google.reddcoin.script;
 
-import com.google.dogecoin.core.Utils;
+import com.google.reddcoin.core.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import static com.google.dogecoin.script.ScriptOpCodes.OP_PUSHDATA1;
-import static com.google.dogecoin.script.ScriptOpCodes.OP_PUSHDATA2;
-import static com.google.dogecoin.script.ScriptOpCodes.OP_PUSHDATA4;
+import static com.google.reddcoin.script.ScriptOpCodes.OP_PUSHDATA1;
+import static com.google.reddcoin.script.ScriptOpCodes.OP_PUSHDATA2;
+import static com.google.reddcoin.script.ScriptOpCodes.OP_PUSHDATA4;
 import static com.google.common.base.Preconditions.checkState;
 
 /**

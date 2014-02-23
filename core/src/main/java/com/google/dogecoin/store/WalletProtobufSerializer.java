@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.store;
+package com.google.reddcoin.store;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.dogecoin.crypto.EncryptedPrivateKey;
-import com.google.dogecoin.crypto.KeyCrypter;
-import com.google.dogecoin.crypto.KeyCrypterScrypt;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.wallet.WalletTransaction;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.reddcoin.crypto.EncryptedPrivateKey;
+import com.google.reddcoin.crypto.KeyCrypter;
+import com.google.reddcoin.crypto.KeyCrypterScrypt;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.wallet.WalletTransaction;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.TextFormat;

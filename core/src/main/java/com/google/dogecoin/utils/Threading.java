@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.utils;
+package com.google.reddcoin.utils;
 
 import com.google.common.util.concurrent.CycleDetectingLockFactory;
 import com.google.common.util.concurrent.ListeningExecutorService;

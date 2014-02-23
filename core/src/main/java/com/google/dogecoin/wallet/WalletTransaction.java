@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.Transaction;
+import com.google.reddcoin.core.Transaction;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Stores data about a transaction that is only relevant to the {@link com.google.dogecoin.core.Wallet} class.
+ * Stores data about a transaction that is only relevant to the {@link com.google.reddcoin.core.Wallet} class.
  */
 public class WalletTransaction {
     public enum Pool {

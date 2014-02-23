@@ -1,8 +1,8 @@
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.store.BlockStoreException;
-import com.google.dogecoin.store.FullPrunedBlockStore;
-import com.google.dogecoin.store.H2FullPrunedBlockStore;
+import com.google.reddcoin.store.BlockStoreException;
+import com.google.reddcoin.store.FullPrunedBlockStore;
+import com.google.reddcoin.store.H2FullPrunedBlockStore;
 import org.junit.After;
 
 import java.io.File;

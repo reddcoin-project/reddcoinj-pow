@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.store.MemoryBlockStore;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.store.MemoryBlockStore;
 
 import java.math.BigInteger;
 import java.net.InetAddress;

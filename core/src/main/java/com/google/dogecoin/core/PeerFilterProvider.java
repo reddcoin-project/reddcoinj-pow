@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
 /**
  * An interface which provides the information required to properly filter data downloaded from Peers.

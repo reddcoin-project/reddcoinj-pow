@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.utils;
+package com.google.reddcoin.utils;
 
 import java.util.List;
 import java.util.concurrent.Executor;

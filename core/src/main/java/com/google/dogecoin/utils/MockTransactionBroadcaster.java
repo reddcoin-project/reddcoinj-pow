@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.utils;
+package com.google.reddcoin.utils;
 
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.TransactionBroadcaster;
-import com.google.dogecoin.core.VerificationException;
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.TransactionBroadcaster;
+import com.google.reddcoin.core.VerificationException;
+import com.google.reddcoin.core.Wallet;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.SettableFuture;

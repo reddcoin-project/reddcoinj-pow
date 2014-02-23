@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.net.discovery.PeerDiscovery;
-import com.google.dogecoin.net.discovery.PeerDiscoveryException;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.store.MemoryBlockStore;
-import com.google.dogecoin.utils.TestUtils;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.net.discovery.PeerDiscovery;
+import com.google.reddcoin.net.discovery.PeerDiscoveryException;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.store.MemoryBlockStore;
+import com.google.reddcoin.utils.TestUtils;
+import com.google.reddcoin.utils.Threading;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.SettableFuture;

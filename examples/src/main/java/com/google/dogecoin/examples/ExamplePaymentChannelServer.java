@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.kits.WalletAppKit;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.protocols.channels.*;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.kits.WalletAppKit;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.protocols.channels.*;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;

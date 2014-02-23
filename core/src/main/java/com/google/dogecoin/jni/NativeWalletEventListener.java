@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.jni;
+package com.google.reddcoin.jni;
 
-import com.google.dogecoin.core.ECKey;
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.Wallet;
-import com.google.dogecoin.core.WalletEventListener;
-import com.google.dogecoin.script.Script;
+import com.google.reddcoin.core.ECKey;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.Wallet;
+import com.google.reddcoin.core.WalletEventListener;
+import com.google.reddcoin.script.Script;
 
 import java.math.BigInteger;
 import java.util.List;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
 /**
  * Used when a given value is either too large too afford or too small for the network to accept.

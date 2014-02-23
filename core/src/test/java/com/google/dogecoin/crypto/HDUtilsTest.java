@@ -1,6 +1,6 @@
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
-import com.google.dogecoin.core.ECKey;
+import com.google.reddcoin.core.ECKey;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

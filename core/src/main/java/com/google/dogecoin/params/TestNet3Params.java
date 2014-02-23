@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.params;
+package com.google.reddcoin.params;
 
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Utils;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Utils;
 import org.spongycastle.util.encoders.Hex;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -50,7 +50,7 @@ public class TestNet3Params extends NetworkParameters {
         alertSigningKey = Hex.decode("04302390343f91cc401d56d68b123028bf52e5fca1939df127f63c6467cdf9c8e2c14b61104cf817d0b780da337893ecc4aaff1309e536162dabbdb45200ca2b0a");
 
         dnsSeeds = new String[] {
-                "testnet-seed.dogecoin.petertodd.org",
+                "testnet-seed.reddcoin.petertodd.org",
                 "testnet-seed.bluematt.me"
         };
     }

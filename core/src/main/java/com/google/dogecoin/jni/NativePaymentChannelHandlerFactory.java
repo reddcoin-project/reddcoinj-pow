@@ -1,7 +1,7 @@
-package com.google.dogecoin.jni;
+package com.google.reddcoin.jni;
 
-import com.google.dogecoin.protocols.channels.PaymentChannelServerListener;
-import com.google.dogecoin.protocols.channels.ServerConnectionEventHandler;
+import com.google.reddcoin.protocols.channels.PaymentChannelServerListener;
+import com.google.reddcoin.protocols.channels.ServerConnectionEventHandler;
 
 import javax.annotation.Nullable;
 import java.net.SocketAddress;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.Wallet;
 
 import java.io.File;
 

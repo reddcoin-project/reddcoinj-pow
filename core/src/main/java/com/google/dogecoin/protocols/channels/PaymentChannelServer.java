@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.protocols.channels.PaymentChannelCloseException.CloseReason;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.protocols.channels.PaymentChannelCloseException.CloseReason;
+import com.google.reddcoin.utils.Threading;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.protobuf.ByteString;
@@ -146,7 +146,7 @@ public class PaymentChannelServer {
      *                               rejected by clients, and a value too low will require excessive channel reopening
      *                               and may cause fees to be require to settle the channel. A reasonable value depends
      *                               entirely on the expected maximum for the channel, and should likely be somewhere
-     *                               between a few bitcents and a dogecoin.
+     *                               between a few bitcents and a reddcoin.
      * @param conn A callback listener which represents the connection to the client (forwards messages we generate to
      *             the client and will close the connection on request)
      */

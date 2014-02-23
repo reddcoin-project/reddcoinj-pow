@@ -1,9 +1,9 @@
-package com.google.dogecoin.tools;
+package com.google.reddcoin.tools;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.net.discovery.DnsDiscovery;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.net.discovery.DnsDiscovery;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

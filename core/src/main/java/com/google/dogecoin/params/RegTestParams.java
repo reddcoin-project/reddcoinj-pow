@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.params;
+package com.google.reddcoin.params;
 
-import com.google.dogecoin.core.Block;
+import com.google.reddcoin.core.Block;
 
 import java.math.BigInteger;
 

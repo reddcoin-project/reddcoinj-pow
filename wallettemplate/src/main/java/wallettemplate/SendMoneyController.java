@@ -1,6 +1,6 @@
 package wallettemplate;
 
-import com.google.dogecoin.core.*;
+import com.google.reddcoin.core.*;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import javafx.application.Platform;

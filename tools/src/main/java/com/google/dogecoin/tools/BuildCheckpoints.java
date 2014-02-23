@@ -1,11 +1,11 @@
-package com.google.dogecoin.tools;
+package com.google.reddcoin.tools;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.store.MemoryBlockStore;
-import com.google.dogecoin.utils.BriefLogFormatter;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.store.MemoryBlockStore;
+import com.google.reddcoin.utils.BriefLogFormatter;
+import com.google.reddcoin.utils.Threading;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;

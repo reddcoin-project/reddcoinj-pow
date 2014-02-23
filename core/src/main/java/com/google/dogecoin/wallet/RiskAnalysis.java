@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.Wallet;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.google.dogecoin.jni;
+package com.google.reddcoin.jni;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.protocols.channels.PaymentChannelCloseException;
-import com.google.dogecoin.protocols.channels.ServerConnectionEventHandler;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.protocols.channels.PaymentChannelCloseException;
+import com.google.reddcoin.protocols.channels.ServerConnectionEventHandler;
 
 import java.math.BigInteger;
 

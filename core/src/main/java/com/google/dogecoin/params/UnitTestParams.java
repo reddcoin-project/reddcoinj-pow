@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.params;
+package com.google.reddcoin.params;
 
-import com.google.dogecoin.core.Block;
-import com.google.dogecoin.core.NetworkParameters;
+import com.google.reddcoin.core.Block;
+import com.google.reddcoin.core.NetworkParameters;
 
 import java.math.BigInteger;
 
 /**
  * Network parameters used by the bitcoinj unit tests (and potentially your own). This lets you solve a block using
- * {@link com.google.dogecoin.core.Block#solve()} by setting difficulty to the easiest possible.
+ * {@link com.google.reddcoin.core.Block#solve()} by setting difficulty to the easiest possible.
  */
 public class UnitTestParams extends NetworkParameters {
     public UnitTestParams() {

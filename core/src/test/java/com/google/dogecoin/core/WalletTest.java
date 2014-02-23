@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.core.Transaction.SigHash;
-import com.google.dogecoin.core.Wallet.SendRequest;
-import com.google.dogecoin.wallet.DefaultCoinSelector;
-import com.google.dogecoin.wallet.RiskAnalysis;
-import com.google.dogecoin.wallet.WalletTransaction;
-import com.google.dogecoin.wallet.WalletTransaction.Pool;
-import com.google.dogecoin.crypto.KeyCrypter;
-import com.google.dogecoin.crypto.KeyCrypterException;
-import com.google.dogecoin.crypto.KeyCrypterScrypt;
-import com.google.dogecoin.crypto.TransactionSignature;
-import com.google.dogecoin.store.WalletProtobufSerializer;
-import com.google.dogecoin.utils.MockTransactionBroadcaster;
-import com.google.dogecoin.utils.TestUtils;
-import com.google.dogecoin.utils.TestWithWallet;
-import com.google.dogecoin.utils.Threading;
-import com.google.dogecoin.wallet.KeyTimeCoinSelector;
-import com.google.dogecoin.wallet.WalletFiles;
-import com.google.dogecoin.wallet.WalletTransaction;
-import com.google.dogecoin.wallet.WalletTransaction.Pool;
+import com.google.reddcoin.core.Transaction.SigHash;
+import com.google.reddcoin.core.Wallet.SendRequest;
+import com.google.reddcoin.wallet.DefaultCoinSelector;
+import com.google.reddcoin.wallet.RiskAnalysis;
+import com.google.reddcoin.wallet.WalletTransaction;
+import com.google.reddcoin.wallet.WalletTransaction.Pool;
+import com.google.reddcoin.crypto.KeyCrypter;
+import com.google.reddcoin.crypto.KeyCrypterException;
+import com.google.reddcoin.crypto.KeyCrypterScrypt;
+import com.google.reddcoin.crypto.TransactionSignature;
+import com.google.reddcoin.store.WalletProtobufSerializer;
+import com.google.reddcoin.utils.MockTransactionBroadcaster;
+import com.google.reddcoin.utils.TestUtils;
+import com.google.reddcoin.utils.TestWithWallet;
+import com.google.reddcoin.utils.Threading;
+import com.google.reddcoin.wallet.KeyTimeCoinSelector;
+import com.google.reddcoin.wallet.WalletFiles;
+import com.google.reddcoin.wallet.WalletTransaction;
+import com.google.reddcoin.wallet.WalletTransaction.Pool;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.ByteString;
@@ -58,9 +58,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.google.dogecoin.utils.TestUtils.*;
-import static com.google.dogecoin.core.Utils.*;
-import static com.google.dogecoin.utils.TestUtils.*;
+import static com.google.reddcoin.utils.TestUtils.*;
+import static com.google.reddcoin.core.Utils.*;
+import static com.google.reddcoin.utils.TestUtils.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.*;
 

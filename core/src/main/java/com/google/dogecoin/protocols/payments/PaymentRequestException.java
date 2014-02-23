@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.payments;
+package com.google.reddcoin.protocols.payments;
 
 public class PaymentRequestException extends Exception {
     public PaymentRequestException(String msg) {

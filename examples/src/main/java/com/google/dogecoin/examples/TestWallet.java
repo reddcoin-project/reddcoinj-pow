@@ -1,14 +1,14 @@
 import java.io.File;
 
-import com.google.dogecoin.core.AbstractPeerEventListener;
-import com.google.dogecoin.core.Block;
-import com.google.dogecoin.core.ECKey;
-import com.google.dogecoin.core.Message;
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Peer;
-import com.google.dogecoin.kits.WalletAppKit;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.core.AbstractPeerEventListener;
+import com.google.reddcoin.core.Block;
+import com.google.reddcoin.core.ECKey;
+import com.google.reddcoin.core.Message;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Peer;
+import com.google.reddcoin.kits.WalletAppKit;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.utils.Threading;
 
 
 public class TestWallet {
@@ -22,7 +22,7 @@ public class TestWallet {
 	public void run() throws Exception {
 		NetworkParameters params = MainNetParams.get();
 		
-		appKit = new WalletAppKit(params, new File("."), "dogecoins") {
+		appKit = new WalletAppKit(params, new File("."), "reddcoins") {
 			@Override
 			protected void onSetupCompleted() {
 				if (wallet().getKeychainSize() < 1) {

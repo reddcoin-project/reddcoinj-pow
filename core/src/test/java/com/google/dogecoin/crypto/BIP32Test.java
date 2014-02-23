@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
-import com.google.dogecoin.core.AddressFormatException;
-import com.google.dogecoin.core.Base58;
+import com.google.reddcoin.core.AddressFormatException;
+import com.google.reddcoin.core.Base58;
 import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;

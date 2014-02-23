@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core.utils;
+package com.google.reddcoin.core.utils;
 
-import com.google.dogecoin.core.Utils;
-import com.google.dogecoin.utils.ExponentialBackoff;
+import com.google.reddcoin.core.Utils;
+import com.google.reddcoin.utils.ExponentialBackoff;
 
 import org.junit.Before;
 import org.junit.Test;

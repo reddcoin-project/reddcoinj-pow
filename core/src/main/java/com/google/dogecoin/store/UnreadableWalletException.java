@@ -1,4 +1,4 @@
-package com.google.dogecoin.store;
+package com.google.reddcoin.store;
 
 /**
  * Thrown by the {@link WalletProtobufSerializer} when the serialized protocol buffer is either corrupted,

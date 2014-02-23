@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.store.WalletProtobufSerializer;
-import com.google.dogecoin.utils.TestWithWallet;
-import com.google.dogecoin.utils.Threading;
-import com.google.dogecoin.wallet.WalletFiles;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.store.WalletProtobufSerializer;
+import com.google.reddcoin.utils.TestWithWallet;
+import com.google.reddcoin.utils.Threading;
+import com.google.reddcoin.wallet.WalletFiles;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import com.google.protobuf.ByteString;
@@ -39,8 +39,8 @@ import java.net.SocketAddress;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.google.dogecoin.protocols.channels.PaymentChannelCloseException.CloseReason;
-import static com.google.dogecoin.utils.TestUtils.createFakeBlock;
+import static com.google.reddcoin.protocols.channels.PaymentChannelCloseException.CloseReason;
+import static com.google.reddcoin.utils.TestUtils.createFakeBlock;
 import static org.bitcoin.paymentchannel.Protos.TwoWayChannelMessage.MessageType;
 import static org.junit.Assert.*;
 

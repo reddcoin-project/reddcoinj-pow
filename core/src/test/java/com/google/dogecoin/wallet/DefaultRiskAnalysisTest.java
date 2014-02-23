@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
 import java.math.BigInteger;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.MainNetParams;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.MainNetParams;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.script.ScriptBuilder;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.script.ScriptBuilder;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
 

@@ -16,12 +16,12 @@
  * 
  */
 
-package com.google.dogecoin.uri;
+package com.google.reddcoin.uri;
 
-import com.google.dogecoin.core.Address;
-import com.google.dogecoin.core.AddressFormatException;
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Utils;
+import com.google.reddcoin.core.Address;
+import com.google.reddcoin.core.AddressFormatException;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +49,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * <p>The following input forms are accepted:</p>
  *
  * <ul>
- * <li>{@code dogecoin:<address>}</li>
- * <li>{@code dogecoin:<address>?<name1>=<value1>&<name2>=<value2>} with multiple
+ * <li>{@code reddcoin:<address>}</li>
+ * <li>{@code reddcoin:<address>?<name1>=<value1>&<name2>=<value2>} with multiple
  * additional name/value pairs</li>
  * </ul>
  *
@@ -88,7 +88,7 @@ public class BitcoinURI {
     public static final String FIELD_ADDRESS = "address";
     public static final String FIELD_PAYMENT_REQUEST_URL = "r";
 
-    public static final String BITCOIN_SCHEME = "dogecoin";
+    public static final String BITCOIN_SCHEME = "reddcoin";
     private static final String ENCODED_SPACE_CHARACTER = "%20";
     private static final String AMPERSAND_SEPARATOR = "&";
     private static final String QUESTION_MARK_SEPARATOR = "?";
@@ -129,20 +129,20 @@ public class BitcoinURI {
             throw new BitcoinURIParseException("Bad URI syntax", e);
         }
 
-        // URI is formed as  dogecoin:<address>?<query parameters>
-        // blockchain.info generates URIs of non-BIP compliant form dogecoin://address?....
+        // URI is formed as  reddcoin:<address>?<query parameters>
+        // blockchain.info generates URIs of non-BIP compliant form reddcoin://address?....
         // We support both until Ben fixes his code.
         
-        // Remove the dogecoin scheme.
+        // Remove the reddcoin scheme.
         // (Note: getSchemeSpecificPart() is not used as it unescapes the label and parse then fails.
-        // For instance with : dogecoin:129mVqKUmJ9uwPxKJBnNdABbuaaNfho4Ha?amount=0.06&label=Tom%20%26%20Jerry
+        // For instance with : reddcoin:129mVqKUmJ9uwPxKJBnNdABbuaaNfho4Ha?amount=0.06&label=Tom%20%26%20Jerry
         // the & (%26) in Tom and Jerry gets interpreted as a separator and the label then gets parsed
         // as 'Tom ' instead of 'Tom & Jerry')
         String schemeSpecificPart;
-        if (input.startsWith("dogecoin://")) {
-            schemeSpecificPart = input.substring("dogecoin://".length());
-        } else if (input.startsWith("dogecoin:")) {
-            schemeSpecificPart = input.substring("dogecoin:".length());
+        if (input.startsWith("reddcoin://")) {
+            schemeSpecificPart = input.substring("reddcoin://".length());
+        } else if (input.startsWith("reddcoin:")) {
+            schemeSpecificPart = input.substring("reddcoin:".length());
         } else {
             throw new BitcoinURIParseException("Unsupported URI scheme: " + uri.getScheme());
         }

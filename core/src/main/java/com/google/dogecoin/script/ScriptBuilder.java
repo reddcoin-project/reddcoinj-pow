@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.script;
+package com.google.reddcoin.script;
 
-import com.google.dogecoin.core.Address;
-import com.google.dogecoin.core.ECKey;
-import com.google.dogecoin.crypto.TransactionSignature;
+import com.google.reddcoin.core.Address;
+import com.google.reddcoin.core.ECKey;
+import com.google.reddcoin.crypto.TransactionSignature;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.google.dogecoin.script.ScriptOpCodes.*;
+import static com.google.reddcoin.script.ScriptOpCodes.*;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * <p>Tools for the construction of commonly used script types. You don't normally need this as it's hidden behind
- * convenience methods on {@link com.google.dogecoin.core.Transaction}, but they are useful when working with the
+ * convenience methods on {@link com.google.reddcoin.core.Transaction}, but they are useful when working with the
  * protocol at a lower level.</p>
  */
 public class ScriptBuilder {

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.crypto.EncryptedPrivateKey;
-import com.google.dogecoin.crypto.KeyCrypter;
-import com.google.dogecoin.crypto.KeyCrypterScrypt;
-import com.google.dogecoin.crypto.TransactionSignature;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.crypto.EncryptedPrivateKey;
+import com.google.reddcoin.crypto.KeyCrypter;
+import com.google.reddcoin.crypto.KeyCrypterScrypt;
+import com.google.reddcoin.crypto.TransactionSignature;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -49,7 +49,7 @@ import java.io.InputStream;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
-import static com.google.dogecoin.core.Utils.reverseBytes;
+import static com.google.reddcoin.core.Utils.reverseBytes;
 import static org.junit.Assert.*;
 
 public class ECKeyTest {

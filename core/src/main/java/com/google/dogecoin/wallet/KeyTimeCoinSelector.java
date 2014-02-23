@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.script.Script;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.script.Script;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class KeyTimeCoinSelector implements CoinSelector {
     private static final Logger log = LoggerFactory.getLogger(KeyTimeCoinSelector.class);
 
-    /** A number of inputs chosen to avoid hitting {@link com.google.dogecoin.core.Transaction.MAX_STANDARD_TX_SIZE} */
+    /** A number of inputs chosen to avoid hitting {@link com.google.reddcoin.core.Transaction.MAX_STANDARD_TX_SIZE} */
     public static final int MAX_SIMULTANEOUS_INPUTS = 600;
 
     private final long unixTimeSeconds;

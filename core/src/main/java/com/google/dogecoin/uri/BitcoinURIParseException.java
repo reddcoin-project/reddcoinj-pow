@@ -16,7 +16,7 @@
  *
  */
 
-package com.google.dogecoin.uri;
+package com.google.reddcoin.uri;
 
 /**
  * <p>Exception to provide the following to {@link BitcoinURI}:</p>

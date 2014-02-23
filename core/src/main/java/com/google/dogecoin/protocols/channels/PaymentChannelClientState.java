@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.crypto.TransactionSignature;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptBuilder;
-import com.google.dogecoin.utils.Threading;
-import com.google.dogecoin.wallet.AllowUnconfirmedCoinSelector;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.crypto.TransactionSignature;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.script.ScriptBuilder;
+import com.google.reddcoin.utils.Threading;
+import com.google.reddcoin.wallet.AllowUnconfirmedCoinSelector;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
@@ -232,7 +232,7 @@ public class PaymentChannelClientState {
      * Creates the initial multisig contract and incomplete refund transaction which can be requested at the appropriate
      * time using {@link PaymentChannelClientState#getIncompleteRefundTransaction} and
      * {@link PaymentChannelClientState#getMultisigContract()}. The way the contract is crafted can be adjusted by
-     * overriding {@link PaymentChannelClientState#editContractSendRequest(com.google.dogecoin.core.Wallet.SendRequest)}.
+     * overriding {@link PaymentChannelClientState#editContractSendRequest(com.google.reddcoin.core.Wallet.SendRequest)}.
      * By default unconfirmed coins are allowed to be used, as for micropayments the risk should be relatively low.
      *
      * @throws ValueOutOfRangeException if the value being used is too small to be accepted by the network

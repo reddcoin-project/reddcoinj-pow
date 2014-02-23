@@ -1,4 +1,4 @@
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
 import com.google.common.util.concurrent.SettableFuture;
 

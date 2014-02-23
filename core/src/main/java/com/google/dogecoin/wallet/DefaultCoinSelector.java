@@ -1,17 +1,17 @@
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.TransactionConfidence;
-import com.google.dogecoin.core.TransactionOutput;
-import com.google.dogecoin.params.RegTestParams;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.TransactionConfidence;
+import com.google.reddcoin.core.TransactionOutput;
+import com.google.reddcoin.params.RegTestParams;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.math.BigInteger;
 import java.util.*;
 
 /**
- * This class implements a {@link com.google.dogecoin.wallet.CoinSelector} which attempts to get the highest priority
+ * This class implements a {@link com.google.reddcoin.wallet.CoinSelector} which attempts to get the highest priority
  * possible. This means that the transaction is the most likely to get confirmed. Note that this means we may end up
  * "spending" more priority than would be required to get the transaction we are creating confirmed.
  */

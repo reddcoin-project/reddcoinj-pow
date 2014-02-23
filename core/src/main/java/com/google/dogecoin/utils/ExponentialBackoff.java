@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.utils;
+package com.google.reddcoin.utils;
 
-import com.google.dogecoin.core.Utils;
+import com.google.reddcoin.core.Utils;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

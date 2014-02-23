@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.utils;
+package com.google.reddcoin.utils;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.store.MemoryBlockStore;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.store.MemoryBlockStore;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import static com.google.dogecoin.utils.TestUtils.createFakeBlock;
-import static com.google.dogecoin.utils.TestUtils.createFakeTx;
+import static com.google.reddcoin.utils.TestUtils.createFakeBlock;
+import static com.google.reddcoin.utils.TestUtils.createFakeTx;
 
 // TODO: This needs to be somewhat rewritten - the "sendMoneyToWallet" methods aren't sending via the block chain object
 

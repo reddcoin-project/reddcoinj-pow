@@ -1,8 +1,8 @@
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.store.MemoryBlockStore;
+import com.google.reddcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.store.MemoryBlockStore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

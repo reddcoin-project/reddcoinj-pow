@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.net;
+package com.google.reddcoin.net;
 
 import java.nio.ByteBuffer;
 

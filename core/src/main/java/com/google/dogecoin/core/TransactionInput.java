@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.script.Script;
+import com.google.reddcoin.script.Script;
 
 import javax.annotation.Nullable;
 import java.io.IOException;

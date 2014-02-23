@@ -1,6 +1,6 @@
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.TransactionOutput;
+import com.google.reddcoin.core.TransactionOutput;
 
 import java.math.BigInteger;
 import java.util.LinkedList;

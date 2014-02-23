@@ -1,6 +1,6 @@
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.UnitTestParams;
+import com.google.reddcoin.params.UnitTestParams;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
 

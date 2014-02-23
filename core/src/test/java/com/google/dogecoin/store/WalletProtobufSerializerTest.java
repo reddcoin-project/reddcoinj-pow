@@ -1,14 +1,14 @@
-package com.google.dogecoin.store;
+package com.google.reddcoin.store;
 
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.script.ScriptBuilder;
-import com.google.dogecoin.utils.BriefLogFormatter;
-import com.google.dogecoin.utils.TestUtils;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.script.ScriptBuilder;
+import com.google.reddcoin.utils.BriefLogFormatter;
+import com.google.reddcoin.utils.TestUtils;
+import com.google.reddcoin.utils.Threading;
 import com.google.protobuf.ByteString;
 import org.bitcoinj.wallet.Protos;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import static com.google.dogecoin.utils.TestUtils.createFakeTx;
+import static com.google.reddcoin.utils.TestUtils.createFakeTx;
 import static org.junit.Assert.*;
 
 public class WalletProtobufSerializerTest {

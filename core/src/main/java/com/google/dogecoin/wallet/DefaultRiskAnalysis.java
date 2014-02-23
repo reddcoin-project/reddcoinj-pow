@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.TransactionConfidence;
-import com.google.dogecoin.core.TransactionOutput;
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.TransactionConfidence;
+import com.google.reddcoin.core.TransactionOutput;
+import com.google.reddcoin.core.Wallet;
 
 import javax.annotation.Nullable;
 

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.store.FullPrunedBlockStore;
-import com.google.dogecoin.store.MemoryFullPrunedBlockStore;
-import com.google.dogecoin.utils.BlockFileLoader;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.store.FullPrunedBlockStore;
+import com.google.reddcoin.store.MemoryFullPrunedBlockStore;
+import com.google.reddcoin.utils.BlockFileLoader;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

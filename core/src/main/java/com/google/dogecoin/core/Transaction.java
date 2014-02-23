@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.dogecoin.crypto.TransactionSignature;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptBuilder;
-import com.google.dogecoin.script.ScriptOpCodes;
+import com.google.reddcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.reddcoin.crypto.TransactionSignature;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.script.ScriptBuilder;
+import com.google.reddcoin.script.ScriptOpCodes;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
@@ -35,7 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.google.dogecoin.core.Utils.*;
+import static com.google.reddcoin.core.Utils.*;
 import static com.google.common.base.Preconditions.*;
 
 /**
@@ -93,7 +93,7 @@ public class Transaction extends ChildMessage implements Serializable {
      */
     public static final BigInteger MIN_NONDUST_OUTPUT = BigInteger.ONE; //DOGE: We can send one "shibetoshi" but this will cost us extra fee!
 
-    // These are serialized in both dogecoin and java serialization.
+    // These are serialized in both reddcoin and java serialization.
     private long version;
     private ArrayList<TransactionInput> inputs;
     private ArrayList<TransactionOutput> outputs;
@@ -725,7 +725,7 @@ public class Transaction extends ChildMessage implements Serializable {
     }
 
     /**
-     * Same as {@link #addSignedInput(TransactionOutPoint, com.google.dogecoin.script.Script, ECKey, com.google.dogecoin.core.Transaction.SigHash, boolean)}
+     * Same as {@link #addSignedInput(TransactionOutPoint, com.google.reddcoin.script.Script, ECKey, com.google.reddcoin.core.Transaction.SigHash, boolean)}
      * but defaults to {@link SigHash#ALL} and "false" for the anyoneCanPay flag. This is normally what you want.
      */
     public TransactionInput addSignedInput(TransactionOutPoint prevOut, Script scriptPubKey, ECKey sigKey) throws ScriptException {
@@ -885,7 +885,7 @@ public class Transaction extends ChildMessage implements Serializable {
 
     /**
      * Calculates a signature that is valid for being inserted into the input at the given position. This is simply
-     * a wrapper around calling {@link Transaction#hashForSignature(int, byte[], com.google.dogecoin.core.Transaction.SigHash, boolean)}
+     * a wrapper around calling {@link Transaction#hashForSignature(int, byte[], com.google.reddcoin.core.Transaction.SigHash, boolean)}
      * followed by {@link ECKey#sign(Sha256Hash, org.spongycastle.crypto.params.KeyParameter)} and then returning
      * a new {@link TransactionSignature}.
      *
@@ -906,7 +906,7 @@ public class Transaction extends ChildMessage implements Serializable {
 
     /**
      * Calculates a signature that is valid for being inserted into the input at the given position. This is simply
-     * a wrapper around calling {@link Transaction#hashForSignature(int, byte[], com.google.dogecoin.core.Transaction.SigHash, boolean)}
+     * a wrapper around calling {@link Transaction#hashForSignature(int, byte[], com.google.reddcoin.core.Transaction.SigHash, boolean)}
      * followed by {@link ECKey#sign(Sha256Hash)} and then returning a new {@link TransactionSignature}.
      *
      * @param inputIndex Which input to calculate the signature for, as an index.
@@ -966,7 +966,7 @@ public class Transaction extends ChildMessage implements Serializable {
         // The SIGHASH flags are used in the design of contracts, please see this page for a further understanding of
         // the purposes of the code in this method:
         //
-        //   https://en.dogecoin.it/wiki/Contracts
+        //   https://en.reddcoin.it/wiki/Contracts
 
         try {
             // Store all the input scripts and clear them in preparation for signing. If we're signing a fresh

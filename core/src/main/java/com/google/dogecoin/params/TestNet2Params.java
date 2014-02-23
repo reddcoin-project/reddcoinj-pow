@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.params;
+package com.google.reddcoin.params;
 
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Utils;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Utils;
 
 import static com.google.common.base.Preconditions.checkState;
 

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.jni;
+package com.google.reddcoin.jni;
 
-import com.google.dogecoin.core.Transaction;
-import com.google.dogecoin.core.TransactionConfidence;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.TransactionConfidence;
 
 /**
  * An event listener that relays events to a native C++ object. A pointer to that object is stored in

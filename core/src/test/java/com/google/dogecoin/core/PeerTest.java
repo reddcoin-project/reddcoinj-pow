@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.utils.TestUtils;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.utils.TestUtils;
+import com.google.reddcoin.utils.Threading;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
@@ -46,7 +46,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.google.dogecoin.utils.TestUtils.*;
+import static com.google.reddcoin.utils.TestUtils.*;
 import static org.junit.Assert.*;
 
 @RunWith(value = Parameterized.class)

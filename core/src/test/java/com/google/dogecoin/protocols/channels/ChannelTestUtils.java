@@ -1,9 +1,9 @@
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.Sha256Hash;
-import com.google.dogecoin.core.TransactionBroadcaster;
-import com.google.dogecoin.core.Utils;
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.Sha256Hash;
+import com.google.reddcoin.core.TransactionBroadcaster;
+import com.google.reddcoin.core.Utils;
+import com.google.reddcoin.core.Wallet;
 import org.bitcoin.paymentchannel.Protos;
 
 import java.math.BigInteger;

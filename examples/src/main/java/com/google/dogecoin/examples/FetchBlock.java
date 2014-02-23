@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.store.MemoryBlockStore;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.store.MemoryBlockStore;
+import com.google.reddcoin.utils.BriefLogFormatter;
 
 import java.net.InetAddress;
 import java.util.concurrent.Future;

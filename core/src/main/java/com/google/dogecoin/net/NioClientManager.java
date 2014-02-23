@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.net;
+package com.google.reddcoin.net;
 
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;

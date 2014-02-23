@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;

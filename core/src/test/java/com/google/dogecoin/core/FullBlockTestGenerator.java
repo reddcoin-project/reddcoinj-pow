@@ -1,8 +1,8 @@
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.core.Transaction.SigHash;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptBuilder;
+import com.google.reddcoin.core.Transaction.SigHash;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.script.ScriptBuilder;
 import com.google.common.base.Preconditions;
 
 import java.io.ByteArrayOutputStream;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 
-import static com.google.dogecoin.script.ScriptOpCodes.*;
+import static com.google.reddcoin.script.ScriptOpCodes.*;
 
 /**
  * Represents a block which is sent to the tested application and which the application must either reject or accept,

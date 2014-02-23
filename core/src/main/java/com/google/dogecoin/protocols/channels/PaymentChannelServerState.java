@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.crypto.TransactionSignature;
-import com.google.dogecoin.script.Script;
-import com.google.dogecoin.script.ScriptBuilder;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.crypto.TransactionSignature;
+import com.google.reddcoin.script.Script;
+import com.google.reddcoin.script.ScriptBuilder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.FutureCallback;

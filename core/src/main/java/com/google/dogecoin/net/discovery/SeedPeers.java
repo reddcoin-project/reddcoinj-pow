@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.dogecoin.net.discovery;
+package com.google.reddcoin.net.discovery;
 
-import com.google.dogecoin.core.NetworkParameters;
+import com.google.reddcoin.core.NetworkParameters;
 
 import javax.annotation.Nullable;
 import java.net.InetAddress;

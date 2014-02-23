@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
-import com.google.dogecoin.core.ECKey;
+import com.google.reddcoin.core.ECKey;
 import com.google.common.collect.ImmutableList;
 import org.spongycastle.crypto.macs.HMac;
 import org.spongycastle.math.ec.ECPoint;

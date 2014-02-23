@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.payments;
+package com.google.reddcoin.protocols.payments;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.script.ScriptBuilder;
-import com.google.dogecoin.uri.BitcoinURI;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.script.ScriptBuilder;
+import com.google.reddcoin.uri.BitcoinURI;
+import com.google.reddcoin.utils.Threading;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;

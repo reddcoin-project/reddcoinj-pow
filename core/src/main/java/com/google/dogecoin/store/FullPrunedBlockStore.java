@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.store;
+package com.google.reddcoin.store;
 
-import com.google.dogecoin.core.Sha256Hash;
-import com.google.dogecoin.core.StoredBlock;
-import com.google.dogecoin.core.StoredTransactionOutput;
-import com.google.dogecoin.core.StoredUndoableBlock;
+import com.google.reddcoin.core.Sha256Hash;
+import com.google.reddcoin.core.StoredBlock;
+import com.google.reddcoin.core.StoredTransactionOutput;
+import com.google.reddcoin.core.StoredUndoableBlock;
 
 /**
  * <p>An implementor of FullPrunedBlockStore saves StoredBlock objects to some storage mechanism.</p>

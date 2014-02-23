@@ -1,9 +1,9 @@
 package wallettemplate;
 
-import com.google.dogecoin.core.AbstractWalletEventListener;
-import com.google.dogecoin.core.DownloadListener;
-import com.google.dogecoin.core.Utils;
-import com.google.dogecoin.core.Wallet;
+import com.google.reddcoin.core.AbstractWalletEventListener;
+import com.google.reddcoin.core.DownloadListener;
+import com.google.reddcoin.core.Utils;
+import com.google.reddcoin.core.Wallet;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

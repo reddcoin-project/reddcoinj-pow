@@ -1,15 +1,15 @@
-package com.google.dogecoin.tools;
+package com.google.reddcoin.tools;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.store.*;
-import com.google.dogecoin.utils.BlockFileLoader;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.store.*;
+import com.google.reddcoin.utils.BlockFileLoader;
 import com.google.common.base.Preconditions;
 
 import java.io.File;
 
-/** Very thin wrapper around {@link com.google.dogecoin.utils.BlockFileLoader} */
+/** Very thin wrapper around {@link com.google.reddcoin.utils.BlockFileLoader} */
 public class BlockImporter {
     public static void main(String[] args) throws BlockStoreException, VerificationException, PrunedException {
         System.out.println("USAGE: BlockImporter (prod|test) (H2|Disk|MemFull|Mem|SPV) [blockStore]");

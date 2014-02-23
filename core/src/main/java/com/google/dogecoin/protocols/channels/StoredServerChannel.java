@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.*;
+import com.google.reddcoin.core.*;
 
 import javax.annotation.Nullable;
 import java.math.BigInteger;
@@ -79,7 +79,7 @@ public class StoredServerChannel {
     }
 
     /**
-     * If a handler is connected, call its {@link com.google.dogecoin.protocols.channels.PaymentChannelServer#close()}
+     * If a handler is connected, call its {@link com.google.reddcoin.protocols.channels.PaymentChannelServer#close()}
      * method thus disconnecting the TCP connection.
      */
     synchronized void closeConnectedHandler() {

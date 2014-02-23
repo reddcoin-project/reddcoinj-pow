@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.tools;
+package com.google.reddcoin.tools;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.crypto.KeyCrypterException;
-import com.google.dogecoin.net.discovery.DnsDiscovery;
-import com.google.dogecoin.net.discovery.PeerDiscovery;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.RegTestParams;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.protocols.payments.PaymentRequestException;
-import com.google.dogecoin.protocols.payments.PaymentSession;
-import com.google.dogecoin.store.*;
-import com.google.dogecoin.uri.BitcoinURI;
-import com.google.dogecoin.uri.BitcoinURIParseException;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.crypto.KeyCrypterException;
+import com.google.reddcoin.net.discovery.DnsDiscovery;
+import com.google.reddcoin.net.discovery.PeerDiscovery;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.RegTestParams;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.protocols.payments.PaymentRequestException;
+import com.google.reddcoin.protocols.payments.PaymentSession;
+import com.google.reddcoin.store.*;
+import com.google.reddcoin.uri.BitcoinURI;
+import com.google.reddcoin.uri.BitcoinURIParseException;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
@@ -475,7 +475,7 @@ public class WalletTool {
     }
 
     private static void sendPaymentRequest(String location, boolean verifyPki) {
-        if (location.startsWith("http") || location.startsWith("dogecoin")) {
+        if (location.startsWith("http") || location.startsWith("reddcoin")) {
             try {
                 ListenableFuture<PaymentSession> future;
                 if (location.startsWith("http")) {
@@ -495,7 +495,7 @@ public class WalletTool {
                 System.err.println("Error creating payment session " + e.getMessage());
                 System.exit(1);
             } catch (BitcoinURIParseException e) {
-                System.err.println("Invalid dogecoin uri: " + e.getMessage());
+                System.err.println("Invalid reddcoin uri: " + e.getMessage());
                 System.exit(1);
             } catch (InterruptedException e) {
                 // Ignore.

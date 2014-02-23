@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.store.BlockStoreException;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.store.BlockStoreException;
 
 import java.io.*;
 import java.math.BigInteger;

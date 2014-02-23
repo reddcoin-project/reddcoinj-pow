@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

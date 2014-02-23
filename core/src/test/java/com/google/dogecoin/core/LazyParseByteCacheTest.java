@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.store.MemoryBlockStore;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.store.MemoryBlockStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
@@ -28,8 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-import static com.google.dogecoin.utils.TestUtils.createFakeBlock;
-import static com.google.dogecoin.utils.TestUtils.createFakeTx;
+import static com.google.reddcoin.utils.TestUtils.createFakeBlock;
+import static com.google.reddcoin.utils.TestUtils.createFakeTx;
 import static org.junit.Assert.*;
 
 public class LazyParseByteCacheTest {

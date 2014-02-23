@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.net.BlockingClientManager;
-import com.google.dogecoin.net.NioClientManager;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.store.BlockStore;
-import com.google.dogecoin.utils.ExponentialBackoff;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.net.BlockingClientManager;
+import com.google.reddcoin.net.NioClientManager;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.store.BlockStore;
+import com.google.reddcoin.utils.ExponentialBackoff;
 import com.google.common.base.Preconditions;
 
 import java.net.InetSocketAddress;

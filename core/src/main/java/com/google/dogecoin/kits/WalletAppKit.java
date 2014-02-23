@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.kits;
+package com.google.reddcoin.kits;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.net.discovery.DnsDiscovery;
-import com.google.dogecoin.store.BlockStoreException;
-import com.google.dogecoin.store.SPVBlockStore;
-import com.google.dogecoin.store.WalletProtobufSerializer;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.net.discovery.DnsDiscovery;
+import com.google.reddcoin.store.BlockStoreException;
+import com.google.reddcoin.store.SPVBlockStore;
+import com.google.reddcoin.store.WalletProtobufSerializer;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.net.discovery;
+package com.google.reddcoin.net.discovery;
 
-import com.google.dogecoin.core.NetworkParameters;
+import com.google.reddcoin.core.NetworkParameters;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

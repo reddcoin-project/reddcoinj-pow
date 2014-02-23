@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.AbstractPeerEventListener;
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.Peer;
-import com.google.dogecoin.core.PeerAddress;
-import com.google.dogecoin.core.VersionMessage;
-import com.google.dogecoin.net.discovery.DnsDiscovery;
-import com.google.dogecoin.net.discovery.PeerDiscoveryException;
-import com.google.dogecoin.net.NioClientManager;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.AbstractPeerEventListener;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.Peer;
+import com.google.reddcoin.core.PeerAddress;
+import com.google.reddcoin.core.VersionMessage;
+import com.google.reddcoin.net.discovery.DnsDiscovery;
+import com.google.reddcoin.net.discovery.PeerDiscoveryException;
+import com.google.reddcoin.net.NioClientManager;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;

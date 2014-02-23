@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.examples;
+package com.google.reddcoin.examples;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.crypto.KeyCrypterException;
-import com.google.dogecoin.kits.WalletAppKit;
-import com.google.dogecoin.params.MainNetParams;
-import com.google.dogecoin.params.RegTestParams;
-import com.google.dogecoin.params.TestNet3Params;
-import com.google.dogecoin.utils.BriefLogFormatter;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.crypto.KeyCrypterException;
+import com.google.reddcoin.kits.WalletAppKit;
+import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.params.RegTestParams;
+import com.google.reddcoin.params.TestNet3Params;
+import com.google.reddcoin.utils.BriefLogFormatter;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;

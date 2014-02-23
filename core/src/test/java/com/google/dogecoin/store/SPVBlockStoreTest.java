@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.store;
+package com.google.reddcoin.store;
 
-import com.google.dogecoin.core.Address;
-import com.google.dogecoin.core.ECKey;
-import com.google.dogecoin.core.NetworkParameters;
-import com.google.dogecoin.core.StoredBlock;
-import com.google.dogecoin.params.UnitTestParams;
+import com.google.reddcoin.core.Address;
+import com.google.reddcoin.core.ECKey;
+import com.google.reddcoin.core.NetworkParameters;
+import com.google.reddcoin.core.StoredBlock;
+import com.google.reddcoin.params.UnitTestParams;
 import org.junit.Test;
 
 import java.io.File;

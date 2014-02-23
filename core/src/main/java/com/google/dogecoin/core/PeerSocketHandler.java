@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.core;
+package com.google.reddcoin.core;
 
-import com.google.dogecoin.net.AbstractTimeoutHandler;
-import com.google.dogecoin.net.MessageWriteTarget;
-import com.google.dogecoin.net.StreamParser;
-import com.google.dogecoin.utils.Threading;
+import com.google.reddcoin.net.AbstractTimeoutHandler;
+import com.google.reddcoin.net.MessageWriteTarget;
+import com.google.reddcoin.net.StreamParser;
+import com.google.reddcoin.utils.Threading;
 import com.google.common.annotations.VisibleForTesting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.*;
 
 /**
  * Handles high-level message (de)serialization for peers, acting as the bridge between the
- * {@link com.google.dogecoin.net} classes and {@link Peer}.
+ * {@link com.google.reddcoin.net} classes and {@link Peer}.
  */
 public abstract class PeerSocketHandler extends AbstractTimeoutHandler implements StreamParser {
     private static final Logger log = LoggerFactory.getLogger(PeerSocketHandler.class);
@@ -185,8 +185,8 @@ public abstract class PeerSocketHandler extends AbstractTimeoutHandler implement
 
     /**
      * Sets the {@link MessageWriteTarget} used to write messages to the peer. This should almost never be called, it is
-     * called automatically by {@link com.google.dogecoin.net.NioClient} or
-     * {@link com.google.dogecoin.net.NioClientManager} once the socket finishes initialization.
+     * called automatically by {@link com.google.reddcoin.net.NioClient} or
+     * {@link com.google.reddcoin.net.NioClientManager} once the socket finishes initialization.
      */
     @Override
     public void setWriteTarget(MessageWriteTarget writeTarget) {

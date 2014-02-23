@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.Sha256Hash;
-import com.google.dogecoin.core.TransactionBroadcaster;
-import com.google.dogecoin.core.Wallet;
-import com.google.dogecoin.net.NioServer;
-import com.google.dogecoin.net.ProtobufParser;
-import com.google.dogecoin.net.StreamParserFactory;
+import com.google.reddcoin.core.Sha256Hash;
+import com.google.reddcoin.core.TransactionBroadcaster;
+import com.google.reddcoin.core.Wallet;
+import com.google.reddcoin.net.NioServer;
+import com.google.reddcoin.net.ProtobufParser;
+import com.google.reddcoin.net.StreamParserFactory;
 import org.bitcoin.paymentchannel.Protos;
 
 import javax.annotation.Nullable;

@@ -21,7 +21,7 @@
  * 
  */
 
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

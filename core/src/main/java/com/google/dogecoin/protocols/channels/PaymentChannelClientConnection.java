@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.channels;
+package com.google.reddcoin.protocols.channels;
 
-import com.google.dogecoin.core.ECKey;
-import com.google.dogecoin.core.InsufficientMoneyException;
-import com.google.dogecoin.core.Sha256Hash;
-import com.google.dogecoin.core.Wallet;
-import com.google.dogecoin.net.NioClient;
-import com.google.dogecoin.net.ProtobufParser;
+import com.google.reddcoin.core.ECKey;
+import com.google.reddcoin.core.InsufficientMoneyException;
+import com.google.reddcoin.core.Sha256Hash;
+import com.google.reddcoin.core.Wallet;
+import com.google.reddcoin.net.NioClient;
+import com.google.reddcoin.net.ProtobufParser;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import org.bitcoin.paymentchannel.Protos;

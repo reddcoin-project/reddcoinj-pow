@@ -1,8 +1,8 @@
 package wallettemplate.controls;
 
-import com.google.dogecoin.core.Address;
-import com.google.dogecoin.core.AddressFormatException;
-import com.google.dogecoin.core.NetworkParameters;
+import com.google.reddcoin.core.Address;
+import com.google.reddcoin.core.AddressFormatException;
+import com.google.reddcoin.core.NetworkParameters;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import wallettemplate.utils.TextFieldValidator;

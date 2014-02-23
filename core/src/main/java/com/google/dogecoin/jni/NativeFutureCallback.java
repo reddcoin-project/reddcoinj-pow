@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.jni;
+package com.google.reddcoin.jni;
 
 import com.google.common.util.concurrent.FutureCallback;
 

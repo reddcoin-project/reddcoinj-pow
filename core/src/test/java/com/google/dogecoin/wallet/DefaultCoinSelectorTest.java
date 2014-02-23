@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.wallet;
+package com.google.reddcoin.wallet;
 
-import com.google.dogecoin.core.*;
-import com.google.dogecoin.params.RegTestParams;
-import com.google.dogecoin.params.UnitTestParams;
-import com.google.dogecoin.utils.TestUtils;
-import com.google.dogecoin.utils.TestWithWallet;
+import com.google.reddcoin.core.*;
+import com.google.reddcoin.params.RegTestParams;
+import com.google.reddcoin.params.UnitTestParams;
+import com.google.reddcoin.utils.TestUtils;
+import com.google.reddcoin.utils.TestWithWallet;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
