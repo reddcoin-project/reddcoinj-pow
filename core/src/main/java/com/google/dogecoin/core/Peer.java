@@ -367,7 +367,7 @@ public class Peer extends PeerSocketHandler {
             {
                 log.warn("Connected to a peer with subVer {}. Don't accept it.",
                         vPeerVersionMessage.subVer);
-                e.getChannel().close();
+                close();
             }
         } else if (m instanceof Ping) {
             if (((Ping) m).hasNonce())
