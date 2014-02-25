@@ -1,5 +1,6 @@
 /**
  * Copyright 2013 Google Inc.
+ * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +23,7 @@ import com.google.dogecoin.script.ScriptBuilder;
 import com.google.dogecoin.uri.BitcoinURI;
 import com.google.dogecoin.utils.Threading;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
@@ -72,6 +74,7 @@ import java.util.concurrent.Callable;
  * "processing" or that an error occurred.
  *
  * @author Kevin Greene
+ * @author Andreas Schildbach
  * @see <a href="https://github.com/bitcoin/bips/blob/master/bip-0070.mediawiki">BIP 0070</a>
  */
 public class PaymentSession {
@@ -227,26 +230,30 @@ public class PaymentSession {
      * Message returned by the merchant in response to a Payment message.
      */
     public class Ack {
-        private String memo = "";
+        @Nullable private String memo;
 
-        Ack(String memo) {
+        Ack(@Nullable String memo) {
             this.memo = memo;
         }
 
         /**
          * Returns the memo included by the merchant in the payment ack. This message is typically displayed to the user
-         * as a notification (e.g. "Your payment was received and is being processed").
+         * as a notification (e.g. "Your payment was received and is being processed"). If none was provided, returns
+         * null.
          */
-        public String getMemo() {
+        @Nullable public String getMemo() {
             return memo;
         }
     }
 
     /**
-     * Returns the memo included by the merchant in the payment request.
+     * Returns the memo included by the merchant in the payment request, or null if not found.
      */
-    public String getMemo() {
-        return paymentDetails.getMemo();
+    @Nullable public String getMemo() {
+        if (paymentDetails.hasMemo())
+            return paymentDetails.getMemo();
+        else
+            return null;
     }
 
     /**
@@ -374,7 +381,7 @@ public class PaymentSession {
                 InputStream inStream = connection.getInputStream();
                 Protos.PaymentACK.Builder paymentAckBuilder = Protos.PaymentACK.newBuilder().mergeFrom(inStream);
                 Protos.PaymentACK paymentAck = paymentAckBuilder.build();
-                String memo = "";
+                String memo = null;
                 if (paymentAck.hasMemo())
                     memo = paymentAck.getMemo();
                 return new Ack(memo);
@@ -386,10 +393,47 @@ public class PaymentSession {
      * Information about the X509 signature's issuer and subject.
      */
     public static class PkiVerificationData {
-        public String name;
-        public PublicKey merchantSigningKey;
-        public TrustAnchor rootAuthority;
-        public String orgName;
+        /** Display name of the payment requestor, could be a domain name, email address, legal name, etc */
+        public final String name;
+        /** The "org" part of the payment requestors ID. */
+        public final String orgName;
+        /** SSL public key that was used to sign. */
+        public final PublicKey merchantSigningKey;
+        /** Object representing the CA that verified the merchant's ID */
+        public final TrustAnchor rootAuthority;
+        /** String representing the display name of the CA that verified the merchant's ID */
+        public final String rootAuthorityName;
+
+        private PkiVerificationData(@Nullable String name, @Nullable String orgName, PublicKey merchantSigningKey,
+                                    TrustAnchor rootAuthority) throws PaymentRequestException.PkiVerificationException {
+            this.name = name;
+            this.orgName = orgName;
+            this.merchantSigningKey = merchantSigningKey;
+            this.rootAuthority = rootAuthority;
+            this.rootAuthorityName = getNameFromCert(rootAuthority);
+        }
+
+        private @Nullable String getNameFromCert(TrustAnchor rootAuthority) throws PaymentRequestException.PkiVerificationException {
+            org.spongycastle.asn1.x500.X500Name name = new X500Name(rootAuthority.getTrustedCert().getSubjectX500Principal().getName());
+            String commonName = null, org = null, location = null, country = null;
+            for (RDN rdn : name.getRDNs()) {
+                AttributeTypeAndValue pair = rdn.getFirst();
+                String val = ((ASN1String)pair.getValue()).getString();
+                if (pair.getType().equals(RFC4519Style.cn))
+                    commonName = val;
+                else if (pair.getType().equals(RFC4519Style.o))
+                    org = val;
+                else if (pair.getType().equals(RFC4519Style.l))
+                    location = val;
+                else if (pair.getType().equals(RFC4519Style.c))
+                    country = val;
+            }
+            if (org != null) {
+                return Joiner.on(", ").skipNulls().join(org, location, country);
+            } else {
+                return commonName;
+            }
+        }
     }
 
     /**
@@ -461,13 +505,10 @@ public class PaymentSession {
                 else if (pair.getType().equals(RFC4519Style.o))
                     orgName = ((ASN1String)pair.getValue()).getString();
             }
-
+            if (entityName == null && orgName == null)
+                throw new PaymentRequestException.PkiVerificationException("Invalid certificate, no CN or O fields");
             // Everything is peachy. Return some useful data to the caller.
-            PkiVerificationData data = new PkiVerificationData();
-            data.name = entityName;
-            data.orgName = orgName;
-            data.merchantSigningKey = publicKey;
-            data.rootAuthority = result.getTrustAnchor();
+            PkiVerificationData data = new PkiVerificationData(entityName, orgName, publicKey, result.getTrustAnchor());
             // Cache the result so we don't have to re-verify if this method is called again.
             pkiVerificationData = data;
             return data;
@@ -557,8 +598,6 @@ public class PaymentSession {
         try {
             if (request == null)
                 throw new PaymentRequestException("request cannot be null");
-            if (!request.hasPaymentDetailsVersion())
-                throw new PaymentRequestException.InvalidVersion("No version");
             if (request.getPaymentDetailsVersion() != 1)
                 throw new PaymentRequestException.InvalidVersion("Version 1 required. Received version " + request.getPaymentDetailsVersion());
             paymentRequest = request;
@@ -581,10 +620,20 @@ public class PaymentSession {
             }
             // This won't ever happen in practice. It would only happen if the user provided outputs
             // that are obviously invalid. Still, we don't want to silently overflow.
-            if (totalValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+            if (totalValue.compareTo(NetworkParameters.MAX_MONEY) > 0)
                 throw new PaymentRequestException.InvalidOutputs("The outputs are way too big.");
         } catch (InvalidProtocolBufferException e) {
             throw new PaymentRequestException(e);
         }
+    }
+
+    /** Returns the protobuf that this object was instantiated with. */
+    public Protos.PaymentRequest getPaymentRequest() {
+        return paymentRequest;
+    }
+
+    /** Returns the protobuf that describes the payment to be made. */
+    public Protos.PaymentDetails getPaymentDetails() {
+        return paymentDetails;
     }
 }

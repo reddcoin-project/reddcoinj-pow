@@ -1,5 +1,6 @@
 /**
  * Copyright 2013 Google Inc.
+ * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +32,7 @@ import com.google.dogecoin.wallet.*;
 import com.google.dogecoin.wallet.WalletTransaction.Pool;
 import com.google.common.collect.*;
 import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -1424,6 +1426,40 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
         }
     }
 
+    /**
+     * Clean up the wallet. Currently, it only removes risky pending transaction from the wallet and only if their
+     * outputs have not been spent.
+     */
+    public void cleanup() {
+        lock.lock();
+        try {
+            boolean dirty = false;
+            for (Iterator<Transaction> i = pending.values().iterator(); i.hasNext();) {
+                Transaction tx = i.next();
+                if (isTransactionRisky(tx, null) && !acceptRiskyTransactions) {
+                    log.debug("Found risky transaction {} in wallet during cleanup.", tx.getHashAsString());
+                    if (!tx.isAnyOutputSpent()) {
+                        tx.disconnectInputs();
+                        i.remove();
+                        transactions.remove(tx.getHash());
+                        dirty = true;
+                        log.info("Removed transaction {} from pending pool during cleanup.", tx.getHashAsString());
+                    } else {
+                        log.info(
+                                "Cannot remove transaction {} from pending pool during cleanup, as it's already spent partially.",
+                                tx.getHashAsString());
+                    }
+                }
+            }
+            if (dirty) {
+                checkState(isConsistent());
+                saveLater();
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
     EnumSet<Pool> getContainingPools(Transaction tx) {
         lock.lock();
         try {
@@ -2275,6 +2311,30 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
         return toString(false, true, true, null);
     }
 
+    private static final Comparator<Transaction> SORT_ORDER_BY_UPDATE_TIME = new Comparator<Transaction>() {
+
+        @Override
+        public int compare(final Transaction tx1, final Transaction tx2) {
+
+            final long time1 = tx1.getUpdateTime().getTime();
+            final long time2 = tx2.getUpdateTime().getTime();
+
+            return -(Longs.compare(time1, time2));
+        }
+    };
+
+    private static final Comparator<Transaction> SORT_ORDER_BY_HEIGHT = new Comparator<Transaction>() {
+
+        @Override
+        public int compare(final Transaction tx1, final Transaction tx2) {
+
+            final int height1 = tx1.getConfidence().getAppearedAtChainHeight();
+            final int height2 = tx2.getConfidence().getAppearedAtChainHeight();
+
+            return -(Ints.compare(height1, height2));
+        }
+    };
+
     /**
      * Formats the wallet as a human readable piece of text. Intended for debugging, the format is not meant to be
      * stable or human readable.
@@ -2291,9 +2351,9 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
             BigInteger balance = getBalance(BalanceType.ESTIMATED);
             builder.append(String.format("Wallet containing %s DOGE in:%n",
                     bitcoinValueToPlainString(balance)));
+            builder.append(String.format("  %d pending transactions%n", pending.size()));
             builder.append(String.format("  %d unspent transactions%n", unspent.size()));
             builder.append(String.format("  %d spent transactions%n", spent.size()));
-            builder.append(String.format("  %d pending transactions%n", pending.size()));
             builder.append(String.format("  %d dead transactions%n", dead.size()));
             final Date lastBlockSeenTime = getLastBlockSeenTime();
             final String lastBlockSeenTimeStr = lastBlockSeenTime == null ? "time unknown" : lastBlockSeenTime.toString();
@@ -2323,21 +2383,21 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
 
             if (includeTransactions) {
                 // Print the transactions themselves
+                if (pending.size() > 0) {
+                    builder.append("\n>>> PENDING:\n");
+                    toStringHelper(builder, pending, chain, SORT_ORDER_BY_UPDATE_TIME);
+                }
                 if (unspent.size() > 0) {
                     builder.append("\n>>> UNSPENT:\n");
-                    toStringHelper(builder, unspent, chain);
+                    toStringHelper(builder, unspent, chain, SORT_ORDER_BY_HEIGHT);
                 }
                 if (spent.size() > 0) {
                     builder.append("\n>>> SPENT:\n");
-                    toStringHelper(builder, spent, chain);
-                }
-                if (pending.size() > 0) {
-                    builder.append("\n>>> PENDING:\n");
-                    toStringHelper(builder, pending, chain);
+                    toStringHelper(builder, spent, chain, SORT_ORDER_BY_HEIGHT);
                 }
                 if (dead.size() > 0) {
                     builder.append("\n>>> DEAD:\n");
-                    toStringHelper(builder, dead, chain);
+                    toStringHelper(builder, dead, chain, SORT_ORDER_BY_HEIGHT);
                 }
             }
             if (includeExtensions && extensions.size() > 0) {
@@ -2353,9 +2413,18 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
     }
 
     private void toStringHelper(StringBuilder builder, Map<Sha256Hash, Transaction> transactionMap,
-                                @Nullable AbstractBlockChain chain) {
+                                @Nullable AbstractBlockChain chain, @Nullable Comparator<Transaction> sortOrder) {
         checkState(lock.isHeldByCurrentThread());
-        for (Transaction tx : transactionMap.values()) {
+
+        final Collection<Transaction> txns;
+        if (sortOrder != null) {
+            txns = new TreeSet<Transaction>(sortOrder);
+            txns.addAll(transactionMap.values());
+        } else {
+            txns = transactionMap.values();
+        }
+
+        for (Transaction tx : txns) {
             try {
                 builder.append("Sends ");
                 builder.append(Utils.bitcoinValueToFriendlyString(tx.getValueSentFromMe(this)));
@@ -3751,71 +3820,5 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
             }
         }.start();
         return rekeyTx;
-    }
-
-    /**
-     * Trims the wallet to a reasonable size, currently by evicting spent transactions.
-     *
-     * This is an attempt to conserve memory. It can in future be extended to evicting dead and
-     * unconfirming pending transactions, used keys, and more.
-     *
-     * As a general rule of thumb one transaction takes about 2 kB of heap memory.
-     *
-     * @param minTransactionsToKeep
-     *            minumum number of transactions to keep in wallet
-     */
-    public void trim(final int minTransactionsToKeep) {
-        lock.lock();
-        try {
-            // Determine number of transactions to evict.
-            final int constNumTransactions = pending.size() + unspent.size() + dead.size();
-            final int numTransactions = constNumTransactions + spent.size();
-            final int numToEvict = numTransactions - minTransactionsToKeep;
-
-            log.info("wallet has {} transactions and should have no more than {} transactions",
-                    numTransactions, minTransactionsToKeep);
-
-            if (numToEvict <= 0)
-                return; // all roger, nothing to worry about
-
-            // Build up list of candidates to delete. Should be spent and buried deep enough under
-            // blocks.
-            List<Transaction> candidates = new LinkedList<Transaction>();
-            for (final Transaction tx : spent.values()) {
-                if (tx.hasConfidence() && tx.getConfidence().getDepthInBlocks() > 2016) // interval
-                    candidates.add(tx);
-            }
-            log.info("looked for {} txns to evict and found {} candidates", numToEvict,
-                    candidates.size());
-
-            if (candidates.size() == 0)
-                return; // we're too fat, but nothing can be done
-
-            // If there are more candidates than needed, make sure only the oldest get evicted.
-            if (candidates.size() > numToEvict) {
-
-                Collections.sort(candidates, new Comparator<Transaction>() {
-                    @Override
-                    public int compare(final Transaction tx1, final Transaction tx2) {
-                        return -Ints.compare(tx1.getConfidence().getDepthInBlocks(), tx2
-                                .getConfidence().getDepthInBlocks());
-                    }
-                });
-
-                candidates = candidates.subList(0, numToEvict);
-            }
-
-            // Evict transactions from spent pool. Keep pending and dead for now.
-            for (final Transaction tx : candidates)
-                spent.remove(tx.getHash());
-
-            saveNow();
-
-            log.info("evicted {} spent transactions, wallet has {} transactions after trim",
-                    candidates.size(), constNumTransactions + spent.size());
-
-        } finally {
-            lock.unlock();
-        }
     }
 }
