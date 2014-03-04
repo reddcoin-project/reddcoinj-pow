@@ -28,7 +28,7 @@
     <artifactId>reddcoinj</artifactId>
 
     <name>reddcoinj</name>
-    <description>A Java Dogecoin library</description>
+    <description>A Java Reddcoin library</description>
 
     <packaging>jar</packaging>
 
