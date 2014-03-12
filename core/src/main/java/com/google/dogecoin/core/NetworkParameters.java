@@ -48,7 +48,7 @@ public abstract class NetworkParameters implements Serializable {
     /**
      * The alert signing key originally owned by Satoshi, and now passed on to Gavin along with a few others.
      */
-    public static final byte[] SATOSHI_KEY = Hex.decode("04fc9702847840aaf195de8442ebecedf5b095cdbb9bc716bda9110971b28a49e0ead8564ff0db22209e0374782c093bb899692d524e9d6a6956e7c5ecbcd68284");
+    public static final byte[] SATOSHI_KEY = Hex.decode("04d4da7a5dae4db797d9b0644d57a5cd50e05a70f36091cd62e2fc41c98ded06340be5a43a35e185690cd9cde5d72da8f6d065b499b06f51dcfba14aad859f443a");
 
     /** The string returned by getId() for the main, production network where people trade things. */
     public static final String ID_MAINNET = "org.dogecoin.production";
