@@ -3503,9 +3503,9 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
                         changeAddress = getChangeAddress();
                     changeOutput = new TransactionOutput(params, req.tx, change, changeAddress);
                     // If the change output would result in this transaction being rejected as dust, just drop the change and make it a fee
-                    if (req.ensureMinRequiredFee && BigInteger.valueOf(100000000).compareTo(change) > 0) {
+                    if (req.ensureMinRequiredFee && BigInteger.valueOf(100000).compareTo(change) > 0) {
                         // This solution definitely fits in category 3
-                        //Throw away change lower than 1 DOGE as this is cheaper than paying the 1 DOGE fee.
+                        //Throw away change lower than 1 RDD as this is cheaper than paying the 1 RDD fee.
                         isCategory3 = true;
                         //additionalValueForNextCategory = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE.add(
                         //                                 Transaction.MIN_NONDUST_OUTPUT.add(BigInteger.ONE));
