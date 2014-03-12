@@ -33,7 +33,9 @@ public class TestNet3Params extends NetworkParameters {
         // Genesis hash is bb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e
         packetMagic = 0xfcc1b7dc;
         interval = INTERVAL;
+        newInterval = INTERVAL_NEW;
         targetTimespan = TARGET_TIMESPAN;
+        newTargetTimespan = TARGET_TIMESPAN_NEW;
         proofOfWorkLimit = Utils.decodeCompactBits(0x1e0ffff0L);
         port = 44556;
         addressHeader = 113;
@@ -48,6 +50,8 @@ public class TestNet3Params extends NetworkParameters {
         String genesisHash = genesisBlock.getHashAsString();
         checkState(genesisHash.equals("bb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e"));
         alertSigningKey = Hex.decode("042756726da3c7ef515d89212ee1705023d14be389e25fe15611585661b9a20021908b2b80a3c7200a0139dd2b26946606aab0eef9aa7689a6dc2c7eee237fa834");
+
+        diffChangeTarget = 50;
 
         dnsSeeds = new String[] {
                 // None
