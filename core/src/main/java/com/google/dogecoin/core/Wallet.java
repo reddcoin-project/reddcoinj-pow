@@ -41,6 +41,7 @@ import org.bitcoinj.wallet.Protos.Wallet.EncryptionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.crypto.params.KeyParameter;
+import org.spongycastle.util.encoders.Hex;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -1078,10 +1079,13 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
                     log.warn("updateForSpends: saw double spend from chain, handling later.");
                 } else {
                     // We saw two pending transactions that double spend each other. We don't know which will win.
-                    // This should not happen.
-                    log.warn("Saw two pending transactions double spend each other: {} vs {}",
-                            tx.getHash(), input.getConnectedOutput().getSpentBy().getParentTransaction().getHash());
+                    // This can happen in the case of bad network nodes that mutate transactions. Do a hex dump
+                    // so the exact nature of the mutation can be examined.
+                    log.warn("Saw two pending transactions double spend each other");
                     log.warn("  offending input is input {}", tx.getInputs().indexOf(input));
+                    log.warn("{}: {}", tx.getHash(), new String(Hex.encode(tx.unsafeBitcoinSerialize())));
+                    Transaction other = input.getConnectedOutput().getSpentBy().getParentTransaction();
+                    log.warn("{}: {}", other.getHash(), new String(Hex.encode(tx.unsafeBitcoinSerialize())));
                 }
             } else if (result == TransactionInput.ConnectionResult.SUCCESS) {
                 // Otherwise we saw a transaction spend our coins, but we didn't try and spend them ourselves yet.
@@ -1621,7 +1625,7 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
         /**
          * The AES key to use to decrypt the private keys before signing.
          * If null then no decryption will be performed and if decryption is required an exception will be thrown.
-         * You can get this from a password by doing wallet.getKeyCrypter().derivePassword(password).
+         * You can get this from a password by doing wallet.getKeyCrypter().deriveKey(password).
          */
         public KeyParameter aesKey = null;
 
@@ -2361,9 +2365,10 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
         lock.lock();
         try {
             StringBuilder builder = new StringBuilder();
-            BigInteger balance = getBalance(BalanceType.ESTIMATED);
-            builder.append(String.format("Wallet containing %s DOGE in:%n",
-                    bitcoinValueToPlainString(balance)));
+            BigInteger estimatedBalance = getBalance(BalanceType.ESTIMATED);
+            BigInteger availableBalance = getBalance(BalanceType.AVAILABLE);
+            builder.append(String.format("Wallet containing %s DOGE (available: %s DOGE) in:%n",
+                    bitcoinValueToPlainString(estimatedBalance), bitcoinValueToPlainString(availableBalance)));
             builder.append(String.format("  %d pending transactions%n", pending.size()));
             builder.append(String.format("  %d unspent transactions%n", unspent.size()));
             builder.append(String.format("  %d spent transactions%n", spent.size()));
