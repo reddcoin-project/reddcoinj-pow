@@ -88,16 +88,13 @@ public class SeedPeers implements PeerDiscovery {
     }
 
     public static int[] seedAddrs =
-            {
-                    0x6E71F3A2, 0x0A14CD43, 0x2E361448, 0x20C9294E,
-                    0x72B5B992, 0x05614C90, 0x2F00FB94, 0xE6601F59,
-                    0x1C13A5BC, 0x1AE99F55, 0xFC05555F, 0x08CB49B8,
-                    0x249B4EA6, 0xA840F3A2, 0x08CABA5D, 0xE13AF3A2,
-
-                    0xC555EC6D, 0x6E71F3A2, //TODO We need more trusted peers.
-                    0x14242E4E,
-                    0x5110555F,
-                    0x901D555F,
+            {  	
+            0x0A4BC7C6,
+            0xEBFDAA6B,
+            0xBCD1F3A2,
+            0xB587E2BC,
+            0xB887E2BC,
+            0x2A31AE6C
             };
     
     public void shutdown() {
