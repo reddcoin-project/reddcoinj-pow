@@ -24,10 +24,14 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import hashengineering.difficulty.KimotoGravityWell.kgw;
+
 import javax.annotation.Nullable;
+
 import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -917,8 +921,12 @@ public abstract class AbstractBlockChain {
         
         long	PastBlocksMin	= PastSecondsMin / BlocksTargetSpacing; //144 blocks
         long	PastBlocksMax	= PastSecondsMax / BlocksTargetSpacing; //4032 blocks
-
+        
+        if (!kgw.isNativeLibraryLoaded()){
         KimotoGravityWell(storedPrev, nextBlock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
+        }else{
+        	KimotoGravityWell_N2(storedPrev, nextBlock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
+        }
     }
     
     
@@ -1043,6 +1051,74 @@ bnNew /= PastRateTargetSeconds;
         
 
     }
+    
+    private void KimotoGravityWell_N2(StoredBlock storedPrev, Block nextBlock, long TargetBlocksSpacingSeconds, long PastBlocksMin, long PastBlocksMax)  throws BlockStoreException, VerificationException {
+    /* current difficulty formula, megacoin - kimoto gravity well */
+    	         //const CBlockIndex  *BlockLastSolved				= pindexLast;
+    	         //const CBlockIndex  *BlockReading				= pindexLast;
+    	         //const CBlockHeader *BlockCreating				= pblock;
+    	         StoredBlock         BlockLastSolved             = storedPrev;
+    	         StoredBlock         BlockReading                = storedPrev;
+    	         Block               BlockCreating               = nextBlock;
+    	 
+    	         BlockCreating				= BlockCreating;
+    	         long				PastBlocksMass				= 0;
+    	         long				PastRateActualSeconds		= 0;
+    	         long				PastRateTargetSeconds		= 0;
+    	         double				PastRateAdjustmentRatio		= 1f;
+    	         BigInteger			PastDifficultyAverage = BigInteger.valueOf(0);
+    	         BigInteger			PastDifficultyAveragePrev = BigInteger.valueOf(0);;
+    	         double				EventHorizonDeviation;
+    	         double				EventHorizonDeviationFast;
+    	         double				EventHorizonDeviationSlow;
+    	 
+    	         long start = System.currentTimeMillis();
+    	         //long endLoop = 0;
+    	 
+    	         if (BlockLastSolved == null || BlockLastSolved.getHeight() == 0 || (long)BlockLastSolved.getHeight() < PastBlocksMin)
+    	         { verifyDifficulty(params.getProofOfWorkLimit(), nextBlock); }
+    	 
+    	         int i = 0;
+    	         //log.info("KGW: i = {}; height = {}; hash {} ", i, BlockReading.getHeight(), BlockReading.getHeader().getHashAsString());
+    	 
+    	         int init_result = kgw.KimotoGravityWell_init(TargetBlocksSpacingSeconds, PastBlocksMin, PastBlocksMax, 28.2d);
+    	    	 
+    	         for (i = 1; BlockReading != null && BlockReading.getHeight() > 0; i++) {
+    	             //long startLoop = System.currentTimeMillis();
+    	             int result = kgw.KimotoGravityWell_loop2(i, BlockReading.getHeader().getDifficultyTarget(),BlockReading.getHeight(), BlockReading.getHeader().getTimeSeconds(), BlockLastSolved.getHeader().getTimeSeconds());
+    	             //BigInteger diff = BlockReading.getHeader().getDifficultyTargetAsInteger();
+    	             //if(i == 1)
+    	             //    log.info("KGW-N2: difficulty of i=1: " + BlockReading.getHeader().getDifficultyTarget() +"->"+ diff.toString(16));
+    	             if(result == 1)
+    	                 break;
+    	             if(result == 2)
+    	                 return;
+    	             //long calcTime = System.currentTimeMillis();
+    	             StoredBlock BlockReadingPrev = blockStore.get(BlockReading.getHeader().getPrevBlockHash());
+    	             if (BlockReadingPrev == null)
+    	             {
+    	                 //If this is triggered, then we are using checkpoints and haven't downloaded enough blocks to verify the difficulty.
+    	                 return;
+    	             }
+    	             //log.info("KGW: i = {}; height = {}; hash {} ", i, BlockReadingPrev.getHeight(), BlockReadingPrev.getHeader().getHashAsString());
+    	             BlockReading = BlockReadingPrev;
+    	
+    	         }
+    	 
+
+    	 
+    	         BigInteger newDifficulty = new BigInteger(kgw.KimotoGravityWell_close());
+    	 
+    	         if (newDifficulty.compareTo(params.getProofOfWorkLimit()) > 0) {
+    	             log.info("Difficulty hit proof of work limit: {}", newDifficulty.toString(16));
+    	             newDifficulty = params.getProofOfWorkLimit();
+    	         }
+    	 
+    	  
+    	         //log.info("KGW-N2 Difficulty Calculated: {}", newDifficulty.toString(16));
+    	          verifyDifficulty(newDifficulty, nextBlock);
+    	  
+    	      }
     
     
     

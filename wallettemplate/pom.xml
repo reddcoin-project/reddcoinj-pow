@@ -26,8 +26,8 @@
     <dependencies>
         <dependency>
             <groupId>com.google</groupId>
-            <artifactId>bitcoinj</artifactId>
-            <version>0.12-SNAPSHOT</version>
+            <artifactId>reddcoinj</artifactId>
+            <version>0.13</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
