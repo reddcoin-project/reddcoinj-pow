@@ -815,90 +815,10 @@ public abstract class AbstractBlockChain {
            }
 
             // No ... so check the difficulty didn't actually change.
-          //  if (nextBlock.getDifficultyTarget() != prev.getDifficultyTarget())
-            //    throw new VerificationException("Unexpected change in difficulty at height " + storedPrev.getHeight() +
-              //          ": " + Long.toHexString(nextBlock.getDifficultyTarget()) + " vs " +
-                //        Long.toHexString(prev.getDifficultyTarget()));
-            //return;
-        //}
-
-        // We need to find a block far back in the chain. It's OK that this is expensive because it only occurs every
-        // two weeks after the initial block chain download.
-        long now = System.currentTimeMillis();
-        //StoredBlock cursor = blockStore.get(prev.getHash());
-        //int goBack = params.getInterval() - 1;
-        //if (cursor.getHeight()+1 != params.getInterval())
-            //goBack = params.getInterval();
-
-        //for (int i = 0; i < goBack; i++) {
-          //  if (cursor == null) {
-                // This should never happen. If it does, it means we are following an incorrect or busted chain.
-            //    throw new VerificationException(
-              //          "Difficulty transition point but we did not find a way back to the genesis block.");
-            //}
-            //cursor = blockStore.get(cursor.getHeader().getPrevBlockHash());
-        //}
-
-        //We used checkpoints...
-        //if(cursor == null)
-        //{
-          //  log.debug("Difficulty transition: Hit checkpoint!");
-            //return;
-        //}
-
-        long elapsed = System.currentTimeMillis() - now;
-        //if (elapsed > 50)
-          //  log.info("Difficulty transition traversal took {}msec", elapsed);
-
-        //Block blockIntervalAgo = cursor.getHeader();
-        //int timespan = (int) (prev.getTimeSeconds() - blockIntervalAgo.getTimeSeconds());
-        // Limit the adjustment step.
-        //final int targetTimespan = params.getTargetTimespan();
         
         checkDifficultyTransitions_V2(storedPrev, nextBlock);
         
-        // Limit the adjustment step.
-//        if (storedPrev.getHeight()+1 > 10000)
-//        {
-//            if (timespan < targetTimespan / 4)
-//                timespan = targetTimespan / 4;
-//            if (timespan > targetTimespan * 4)
-//                timespan = targetTimespan * 4;
-//        }
-//        else if (storedPrev.getHeight()+1 > 5000)
-//        {
-//            if (timespan < targetTimespan / 8)
-//                timespan = targetTimespan / 8;
-//            if (timespan > targetTimespan * 4)
-//                timespan = targetTimespan * 4;
-//        }
-//        else
-//        {
-//            if (timespan < targetTimespan / 16)
-//                timespan = targetTimespan / 16;
-//            if (timespan > targetTimespan * 4)
-//                timespan = targetTimespan * 4;
-//        }
-//
-//        BigInteger newDifficulty = Utils.decodeCompactBits(prev.getDifficultyTarget());
-//        newDifficulty = newDifficulty.multiply(BigInteger.valueOf(timespan));
-//        newDifficulty = newDifficulty.divide(BigInteger.valueOf(targetTimespan));
-//
-//        if (newDifficulty.compareTo(params.getProofOfWorkLimit()) > 0) {
-//            log.info("Difficulty hit proof of work limit: {}", newDifficulty.toString(16));
-//            newDifficulty = params.getProofOfWorkLimit();
-//        }
-//
-//        int accuracyBytes = (int) (nextBlock.getDifficultyTarget() >>> 24) - 3;
-//        BigInteger receivedDifficulty = nextBlock.getDifficultyTargetAsInteger();
-//
-//        // The calculated difficulty is to a higher precision than received, so reduce here.
-//        BigInteger mask = BigInteger.valueOf(0xFFFFFFL).shiftLeft(accuracyBytes * 8);
-//        newDifficulty = newDifficulty.and(mask);
-//
-//        if (newDifficulty.compareTo(receivedDifficulty) != 0)
-//            throw new VerificationException("Network provided difficulty bits do not match what was calculated: " +
-//                    receivedDifficulty.toString(16) + " vs " + newDifficulty.toString(16));
+
     }
     
     private void checkDifficultyTransitions_V2(StoredBlock storedPrev, Block nextBlock) throws BlockStoreException, VerificationException {
@@ -1081,7 +1001,7 @@ bnNew /= PastRateTargetSeconds;
     	         int i = 0;
     	         //log.info("KGW: i = {}; height = {}; hash {} ", i, BlockReading.getHeight(), BlockReading.getHeader().getHashAsString());
     	 
-    	         int init_result = kgw.KimotoGravityWell_init(TargetBlocksSpacingSeconds, PastBlocksMin, PastBlocksMax, 28.2d);
+    	         int init_result = kgw.KimotoGravityWell_init(TargetBlocksSpacingSeconds, PastBlocksMin, PastBlocksMax, Double.valueOf(144));
     	    	 
     	         for (i = 1; BlockReading != null && BlockReading.getHeight() > 0; i++) {
     	             //long startLoop = System.currentTimeMillis();
