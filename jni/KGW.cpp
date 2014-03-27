@@ -468,7 +468,6 @@ static const JNINativeMethod methods[] = {
     //{ "cpda", "(I[B[B)[B", (void *)cpda  },
     { "KimotoGravityWell_close", "()[B", (void*)KimotoGravityWell_close},
     { "KimotoGravityWell_init", "(JJJD)I", (void*)KimotoGravityWell_init},
-    { "KimotoGravityWell_loop", "(I[BIJJ)I", (void*)KimotoGravityWell_loop},
     { "KimotoGravityWell_loop2", "(IJIJJ)I", (void*)KimotoGravityWell_loop2},
 
 
@@ -482,7 +481,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     }
 
     jclass cls = (env)->FindClass("hashengineering/difficulty/KimotoGravityWell/kgw");
-    int r = (env)->RegisterNatives(cls, methods, 4);
+    int r = (env)->RegisterNatives(cls, methods, 3);
 
     return (r == JNI_OK) ? JNI_VERSION_1_6 : -1;
 }
