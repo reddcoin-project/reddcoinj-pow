@@ -1,6 +1,5 @@
 /*
  * Copyright 2011 Google Inc.
- * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,10 +89,8 @@ public class TestWithNetworkConnections {
         blockChain = new BlockChain(unitTestParams, wallet, blockStore);
 
         startPeerServers();
-        if (clientType == ClientType.NIO_CLIENT_MANAGER || clientType == ClientType.BLOCKING_CLIENT_MANAGER) {
-            channels.startAsync();
-            channels.awaitRunning();
-        }
+        if (clientType == ClientType.NIO_CLIENT_MANAGER || clientType == ClientType.BLOCKING_CLIENT_MANAGER)
+            channels.startAndWait();
 
         socketAddress = new InetSocketAddress("127.0.0.1", 1111);
     }
@@ -121,8 +118,7 @@ public class TestWithNetworkConnections {
                 };
             }
         }, new InetSocketAddress("127.0.0.1", 2000 + i));
-        peerServers[i].startAsync();
-        peerServers[i].awaitRunning();
+        peerServers[i].startAndWait();
     }
 
     public void tearDown() throws Exception {
@@ -136,8 +132,7 @@ public class TestWithNetworkConnections {
     }
 
     protected void stopPeerServer(int i) {
-        peerServers[i].stopAsync();
-        peerServers[i].awaitTerminated();
+        peerServers[i].stopAndWait();
     }
 
     protected InboundMessageQueuer connect(Peer peer, VersionMessage versionMessage) throws Exception {

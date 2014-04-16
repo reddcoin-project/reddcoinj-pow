@@ -1,6 +1,5 @@
 /**
  * Copyright 2011 Google Inc.
- * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +54,7 @@ public class Utils {
     }
 
     /** The string that prefixes all text messages signed using Bitcoin keys. */
-    public static final String BITCOIN_SIGNED_MESSAGE_HEADER = "Dogecoin Signed Message:\n";
+    public static final String BITCOIN_SIGNED_MESSAGE_HEADER = "Reddcoin Signed Message:\n";
     public static final byte[] BITCOIN_SIGNED_MESSAGE_HEADER_BYTES = BITCOIN_SIGNED_MESSAGE_HEADER.getBytes(Charsets.UTF_8);
 
     // TODO: Replace this nanocoins business with something better.
@@ -470,20 +469,13 @@ public class Utils {
      */
     public static Date rollMockClockMillis(long millis) {
         if (mockTime == null)
-            throw new IllegalStateException("You need to use setMockClock() first.");
+            mockTime = new Date();
         mockTime = new Date(mockTime.getTime() + millis);
         return mockTime;
     }
 
     /**
-     * Sets the mock clock to the current time.
-     */
-    public static void setMockClock() {
-        mockTime = new Date();
-    }
-
-    /**
-     * Sets the mock clock to the given time (in seconds).
+     * Sets the mock clock to the given time (in seconds)
      */
     public static void setMockClock(long mockClock) {
         mockTime = new Date(mockClock * 1000);
@@ -499,19 +491,14 @@ public class Utils {
             return new Date();
     }
 
-    // TODO: Replace usages of this where the result is / 1000 with currentTimeSeconds.
-    /** Returns the current time in milliseconds since the epoch, or a mocked out equivalent. */
+    /** Returns the current time in seconds since the epoch, or a mocked out equivalent. */
     public static long currentTimeMillis() {
         if (mockTime != null)
             return mockTime.getTime();
         else
             return System.currentTimeMillis();
     }
-
-    public static long currentTimeSeconds() {
-        return currentTimeMillis() / 1000;
-    }
-
+    
     public static byte[] copyOf(byte[] in, int length) {
         byte[] out = new byte[length];
         System.arraycopy(in, 0, out, 0, Math.min(length, in.length));

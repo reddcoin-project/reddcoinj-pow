@@ -357,13 +357,13 @@ public class Peer extends PeerSocketHandler {
                         vPeerVersionMessage.clientVersion, version);
                 close();
             }
-            if (vPeerVersionMessage.bestHeight < MIN_PEER_BLOCK_HEIGHT && params.getId().equals(NetworkParameters.ID_MAINNET))
+            if (vPeerVersionMessage.bestHeight < MIN_PEER_BLOCK_HEIGHT)
             {
                 log.warn("Connected to a peer with just {} blocks. Don't accept it.",
                         vPeerVersionMessage.bestHeight);
                 close();
             }
-            if (!vPeerVersionMessage.subVer.contains(ACCEPTED_SUBVERSION) && params.getId().equals(NetworkParameters.ID_MAINNET))
+            if (!vPeerVersionMessage.subVer.contains(ACCEPTED_SUBVERSION))
             {
                 log.warn("Connected to a peer with subVer {}. Don't accept it.",
                         vPeerVersionMessage.subVer);

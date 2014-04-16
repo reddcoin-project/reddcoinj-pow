@@ -23,14 +23,14 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 
-import com.google.dogecoin.protocols.payments.PaymentProtocol;
 import org.bitcoin.protocols.payments.Protos;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.dogecoin.crypto.X509Utils;
-import com.google.dogecoin.protocols.payments.PaymentProtocol.PkiVerificationData;
 import com.google.dogecoin.protocols.payments.PaymentRequestException.PkiVerificationException;
+import com.google.reddcoin.crypto.X509Utils;
+import com.google.reddcoin.protocols.payments.PaymentProtocol;
+import com.google.reddcoin.protocols.payments.PaymentProtocol.PkiVerificationData;
 
 public class PaymentProtocolTest {
 

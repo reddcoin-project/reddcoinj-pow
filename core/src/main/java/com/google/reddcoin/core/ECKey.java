@@ -30,11 +30,9 @@ import org.spongycastle.asn1.sec.SECNamedCurves;
 import org.spongycastle.asn1.x9.X9ECParameters;
 import org.spongycastle.asn1.x9.X9IntegerConverter;
 import org.spongycastle.crypto.AsymmetricCipherKeyPair;
-import org.spongycastle.crypto.digests.SHA256Digest;
 import org.spongycastle.crypto.generators.ECKeyPairGenerator;
 import org.spongycastle.crypto.params.*;
 import org.spongycastle.crypto.signers.ECDSASigner;
-import org.spongycastle.crypto.signers.HMacDSAKCalculator;
 import org.spongycastle.math.ec.ECAlgorithms;
 import org.spongycastle.math.ec.ECCurve;
 import org.spongycastle.math.ec.ECPoint;
@@ -127,9 +125,17 @@ public class ECKey implements Serializable {
         ECPrivateKeyParameters privParams = (ECPrivateKeyParameters) keypair.getPrivate();
         ECPublicKeyParameters pubParams = (ECPublicKeyParameters) keypair.getPublic();
         priv = privParams.getD();
-        pub = pubParams.getQ().getEncoded(true);
+        // Unfortunately Bouncy Castle does not let us explicitly change a point to be compressed, even though it
+        // could easily do so. We must re-build it here so the ECPoints withCompression flag can be set to true.
+        ECPoint uncompressed = pubParams.getQ();
+        ECPoint compressed = compressPoint(uncompressed);
+        pub = compressed.getEncoded();
 
-        creationTimeSeconds = Utils.currentTimeSeconds();
+        creationTimeSeconds = Utils.currentTimeMillis() / 1000;
+    }
+
+    private static ECPoint compressPoint(ECPoint uncompressed) {
+        return new ECPoint.Fp(CURVE.getCurve(), uncompressed.getX(), uncompressed.getY(), true);
     }
 
     /**
@@ -137,7 +143,7 @@ public class ECKey implements Serializable {
      * reference implementation in its wallet. Note that this is slow because it requires an EC point multiply.
      */
     public static ECKey fromASN1(byte[] asn1privkey) {
-        return extractKeyFromASN1(asn1privkey);
+        return new ECKey(extractPrivateKeyFromASN1(asn1privkey));
     }
 
     /** Creates an ECKey given the private key only.  The public key is calculated from it (this is slow) */
@@ -246,7 +252,9 @@ public class ECKey implements Serializable {
      */
     public static byte[] publicKeyFromPrivate(BigInteger privKey, boolean compressed) {
         ECPoint point = CURVE.getG().multiply(privKey);
-        return point.getEncoded(compressed);
+        if (compressed)
+            point = compressPoint(point);
+        return point.getEncoded();
     }
 
     /** Gets the hash160 form of the public key (as seen in addresses). */
@@ -325,7 +333,7 @@ public class ECKey implements Serializable {
      */
     public static class ECDSASignature {
         /** The two components of the signature. */
-        public final BigInteger r, s;
+        public BigInteger r, s;
 
         /**
          * Constructs a signature with the given components. Does NOT automatically canonicalise the signature.
@@ -342,16 +350,14 @@ public class ECKey implements Serializable {
          * been signed, as that violates various assumed invariants. Thus in future only one of those forms will be
          * considered legal and the other will be banned.
          */
-        public ECDSASignature toCanonicalised() {
+        public void ensureCanonical() {
             if (s.compareTo(HALF_CURVE_ORDER) > 0) {
                 // The order of the curve is the number of valid points that exist on that curve. If S is in the upper
                 // half of the number of valid points, then bring it back to the lower half. Otherwise, imagine that
                 //    N = 10
                 //    s = 8, so (-8 % 10 == 2) thus both (r, 8) and (r, 2) are valid solutions.
                 //    10 - 8 == 2, giving us always the latter solution, which is canonical.
-                return new ECDSASignature(r, CURVE.getN().subtract(s));
-            } else {
-                return this;
+                s = CURVE.getN().subtract(s);
             }
         }
 
@@ -372,10 +378,10 @@ public class ECKey implements Serializable {
             try {
                 ASN1InputStream decoder = new ASN1InputStream(bytes);
                 DLSequence seq = (DLSequence) decoder.readObject();
-                ASN1Integer r, s;
+                DERInteger r, s;
                 try {
-                    r = (ASN1Integer) seq.getObjectAt(0);
-                    s = (ASN1Integer) seq.getObjectAt(1);
+                    r = (DERInteger) seq.getObjectAt(0);
+                    s = (DERInteger) seq.getObjectAt(1);
                 } catch (ClassCastException e) {
                     throw new IllegalArgumentException(e);
                 }
@@ -392,30 +398,10 @@ public class ECKey implements Serializable {
             // Usually 70-72 bytes.
             ByteArrayOutputStream bos = new ByteArrayOutputStream(72);
             DERSequenceGenerator seq = new DERSequenceGenerator(bos);
-            seq.addObject(new ASN1Integer(r));
-            seq.addObject(new ASN1Integer(s));
+            seq.addObject(new DERInteger(r));
+            seq.addObject(new DERInteger(s));
             seq.close();
             return bos;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            ECDSASignature signature = (ECDSASignature) o;
-
-            if (!r.equals(signature.r)) return false;
-            if (!s.equals(signature.s)) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = r.hashCode();
-            result = 31 * result + s.hashCode();
-            return result;
         }
     }
 
@@ -477,11 +463,13 @@ public class ECKey implements Serializable {
             }
         }
 
-        ECDSASigner signer = new ECDSASigner(new HMacDSAKCalculator(new SHA256Digest()));
+        ECDSASigner signer = new ECDSASigner();
         ECPrivateKeyParameters privKey = new ECPrivateKeyParameters(privateKeyForSigning, CURVE);
         signer.init(true, privKey);
         BigInteger[] components = signer.generateSignature(input.getBytes());
-        return new ECDSASignature(components[0], components[1]).toCanonicalised();
+        final ECDSASignature signature = new ECDSASignature(components[0], components[1]);
+        signature.ensureCanonical();
+        return signature;
     }
 
     /**
@@ -571,7 +559,7 @@ public class ECKey implements Serializable {
         return true;
     }
 
-    private static ECKey extractKeyFromASN1(byte[] asn1privkey) {
+    private static BigInteger extractPrivateKeyFromASN1(byte[] asn1privkey) {
         // To understand this code, see the definition of the ASN.1 format for EC private keys in the OpenSSL source
         // code in ec_asn1.c:
         //
@@ -586,21 +574,12 @@ public class ECKey implements Serializable {
             ASN1InputStream decoder = new ASN1InputStream(asn1privkey);
             DLSequence seq = (DLSequence) decoder.readObject();
             checkArgument(seq.size() == 4, "Input does not appear to be an ASN.1 OpenSSL EC private key");
-            checkArgument(((ASN1Integer) seq.getObjectAt(0)).getValue().equals(BigInteger.ONE),
+            checkArgument(((DERInteger) seq.getObjectAt(0)).getValue().equals(BigInteger.ONE),
                     "Input is of wrong version");
             Object obj = seq.getObjectAt(1);
-            byte[] privbits = ((ASN1OctetString) obj).getOctets();
+            byte[] bits = ((ASN1OctetString) obj).getOctets();
             decoder.close();
-            BigInteger privkey = new BigInteger(1, privbits);
-            byte[] pubbits = ((DERBitString)((ASN1TaggedObject)seq.getObjectAt(3)).getObject()).getBytes();
-            // Now sanity check to ensure the pubkey bytes match the privkey.
-            byte[] compressed = publicKeyFromPrivate(privkey, true);
-            if (Arrays.equals(pubbits, compressed))
-                return new ECKey(privkey, compressed);
-            byte[] uncompressed = publicKeyFromPrivate(privkey, false);
-            if (Arrays.equals(pubbits, uncompressed))
-                return new ECKey(privkey, uncompressed);
-            throw new IllegalArgumentException("Public key in ASN.1 structure does not match private key.");
+            return new BigInteger(1, bits);
         } catch (IOException e) {
             throw new RuntimeException(e);  // Cannot happen, reading from memory stream.
         }
@@ -773,7 +752,11 @@ public class ECKey implements Serializable {
         BigInteger srInv = rInv.multiply(sig.s).mod(n);
         BigInteger eInvrInv = rInv.multiply(eInv).mod(n);
         ECPoint.Fp q = (ECPoint.Fp) ECAlgorithms.sumOfTwoMultiplies(CURVE.getG(), eInvrInv, R, srInv);
-        return new ECKey((byte[])null, q.getEncoded(compressed));
+        if (compressed) {
+            // We have to manually recompress the point as the compressed-ness gets lost when multiply() is used.
+            q = new ECPoint.Fp(curve, q.getX(), q.getY(), true);
+        }
+        return new ECKey((byte[])null, q.getEncoded());
     }
 
     /** Decompress a compressed public key (x co-ord and low-bit of y-coord). */
@@ -855,9 +838,7 @@ public class ECKey implements Serializable {
         final byte[] privKeyBytes = getPrivKeyBytes();
         checkState(privKeyBytes != null, "Private key is not available");
         EncryptedPrivateKey encryptedPrivateKey = keyCrypter.encrypt(privKeyBytes, aesKey);
-        ECKey result = new ECKey(encryptedPrivateKey, getPubKey(), keyCrypter);
-        result.setCreationTimeSeconds(creationTimeSeconds);
-        return result;
+        return new ECKey(encryptedPrivateKey, getPubKey(), keyCrypter);
     }
 
     /**
@@ -879,7 +860,6 @@ public class ECKey implements Serializable {
         ECKey key = new ECKey(new BigInteger(1, unencryptedPrivateKey), null, isCompressed());
         if (!Arrays.equals(key.getPubKey(), getPubKey()))
             throw new KeyCrypterException("Provided AES key is wrong");
-        key.setCreationTimeSeconds(creationTimeSeconds);
         return key;
     }
 

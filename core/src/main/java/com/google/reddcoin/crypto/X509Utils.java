@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
 import com.google.common.base.Joiner;
 import org.spongycastle.asn1.ASN1ObjectIdentifier;

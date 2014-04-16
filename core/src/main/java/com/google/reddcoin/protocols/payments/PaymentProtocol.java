@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.protocols.payments;
+package com.google.reddcoin.protocols.payments;
 
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -44,10 +44,10 @@ import javax.annotation.Nullable;
 
 import org.bitcoin.protocols.payments.Protos;
 
-import com.google.dogecoin.crypto.X509Utils;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.reddcoin.crypto.X509Utils;
 
 public class PaymentProtocol {
 

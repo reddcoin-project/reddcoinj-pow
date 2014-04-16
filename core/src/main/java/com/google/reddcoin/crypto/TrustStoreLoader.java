@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.dogecoin.crypto;
+package com.google.reddcoin.crypto;
 
 import javax.annotation.Nonnull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

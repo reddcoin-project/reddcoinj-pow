@@ -802,15 +802,6 @@ public abstract class AbstractBlockChain {
     private void checkDifficultyTransitions(StoredBlock storedPrev, Block nextBlock) throws BlockStoreException, VerificationException {
         //checkState(lock.isHeldByCurrentThread());
         Block prev = storedPrev.getHeader();
-
-        boolean newDiffAlgo = storedPrev.getHeight() + 1 >= params.getDiffChangeTarget();
-        int retargetInterval = params.getInterval();
-        int retargetTimespan = params.getTargetTimespan();
-        if (newDiffAlgo)
-        {
-            retargetInterval = params.getNewInterval();
-            retargetTimespan = params.getNewTargetTimespan();
-        }
         
         // Is this supposed to be a difficulty transition point?
         //if ((storedPrev.getHeight() + 1) % params.getInterval() != 0) {
@@ -844,17 +835,7 @@ public abstract class AbstractBlockChain {
         
         if(storedPrev.getHeight()+1 <= 6000){
             PastSecondsMin = (long) (TimeDaySeconds * 0.01);
-            PastSecondsMax = (long) (TimeDaySeconds * 0.14);
-
-        for (int i = 0; i < goBack; i++) {
-            if (cursor == null) {
-                // This should never happen. If it does, it means we are following an incorrect or busted chain.
-                throw new VerificationException(
-                        "Difficulty transition point but we did not find a way back to the genesis block.");
-            }
-            cursor = blockStore.get(cursor.getHeader().getPrevBlockHash());
-        }
-        
+            PastSecondsMax = (long) (TimeDaySeconds * 0.14);       
         
         long	PastBlocksMin	= PastSecondsMin / BlocksTargetSpacing; //144 blocks
         long	PastBlocksMax	= PastSecondsMax / BlocksTargetSpacing; //4032 blocks
@@ -864,6 +845,7 @@ public abstract class AbstractBlockChain {
         }else{
         	KimotoGravityWell_N2(storedPrev, nextBlock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
         }
+    }
     }
     
     
@@ -921,13 +903,6 @@ public abstract class AbstractBlockChain {
         for (i = 1; BlockReading != null && BlockReading.getHeight() > 0; i++) {
             //long startLoop = System.currentTimeMillis();
             if (PastBlocksMax > 0 && i > PastBlocksMax)
-
-        if (newDiffAlgo)
-        {
-            timespan = retargetTimespan + (timespan - retargetTimespan)/8;
-            if (timespan < (retargetTimespan - (retargetTimespan/4)) ) timespan = (retargetTimespan - (retargetTimespan/4));
-            if (timespan > (retargetTimespan + (retargetTimespan/2)) ) timespan = (retargetTimespan + (retargetTimespan/2));
-        }
             {
                 break;
             }

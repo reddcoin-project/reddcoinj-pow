@@ -63,10 +63,11 @@ public class MainNetParams extends NetworkParameters {
         //TODO Get actual Dogecoin checkpoints
 
         dnsSeeds = new String[] {
-                "seed.egnomatics.com"
-                "seed.dogechain.info",
-        };
+                "seed.egnomatics.com",
+                "seed.dogechain.info"        
+                };
     }
+    
 
     private static MainNetParams instance;
     public static synchronized MainNetParams get() {

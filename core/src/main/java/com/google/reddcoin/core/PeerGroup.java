@@ -27,15 +27,19 @@ import com.google.reddcoin.net.ClientConnectionManager;
 import com.google.reddcoin.net.NioClientManager;
 import com.google.reddcoin.net.discovery.PeerDiscovery;
 import com.google.reddcoin.net.discovery.PeerDiscoveryException;
+import com.google.reddcoin.params.MainNetParams;
 import com.google.reddcoin.script.Script;
 import com.google.reddcoin.utils.ExponentialBackoff;
 import com.google.reddcoin.utils.ListenerRegistration;
 import com.google.reddcoin.utils.Threading;
+
 import net.jcip.annotations.GuardedBy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
+
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -682,7 +686,7 @@ public class PeerGroup extends AbstractExecutionThreadService implements Transac
     protected void startUp() throws Exception {
         // This is run in a background thread by the Service implementation.
         vPingTimer = new Timer("Peer pinging thread", true);
-        channels.startAsync();
+        channels.startAndWait();
         channels.awaitRunning();
         triggerConnections();
     }

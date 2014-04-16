@@ -1,6 +1,5 @@
 /*
  * Copyright 2011 Google Inc.
- * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,14 +98,12 @@ public class PeerGroupTest extends TestWithPeerGroup {
     public void tearDown() throws Exception {
         super.tearDown();
         Utils.finishMockSleep();
-        peerGroup.stopAsync();
-        peerGroup.awaitTerminated();
+        peerGroup.stopAndWait();
     }
 
     @Test
     public void listener() throws Exception {
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         peerGroup.addEventListener(listener);
 
         // Create a couple of peers.
@@ -150,8 +147,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
             public void shutdown() {
             }
         });
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         latch.await();
         // Check that we did indeed throw an exception. If we got here it means we threw and then PeerGroup tried
         // again a bit later.
@@ -161,8 +157,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
     @Test
     public void receiveTxBroadcast() throws Exception {
         // Check that when we receive transactions on all our peers, we do the right thing.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
 
         // Create a couple of peers.
         InboundMessageQueuer p1 = connectPeer(1);
@@ -195,15 +190,13 @@ public class PeerGroupTest extends TestWithPeerGroup {
         inbound(p2, new NotFoundMessage(unitTestParams, getdata.getItems()));
         pingAndWait(p2);
         assertEquals(value, wallet.getBalance(Wallet.BalanceType.ESTIMATED));
-        peerGroup.stopAsync();
-        peerGroup.awaitTerminated();
+        peerGroup.stopAndWait();
     }
 
     @Test
     public void singleDownloadPeer1() throws Exception {
         // Check that we don't attempt to retrieve blocks on multiple peers.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
 
         // Create a couple of peers.
         InboundMessageQueuer p1 = connectPeer(1);
@@ -239,7 +232,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
         // Peer 2 fetches it next time it hears an inv (should it fetch immediately?).
         inbound(p2, inv);
         assertTrue(outbound(p2) instanceof GetDataMessage);
-        peerGroup.stopAsync();
+        peerGroup.stop();
     }
 
     @Test
@@ -247,8 +240,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
         // Check that we don't attempt multiple simultaneous block chain downloads, when adding a new peer in the
         // middle of an existing chain download.
         // Create a couple of peers.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
 
         // Create a couple of peers.
         InboundMessageQueuer p1 = connectPeer(1);
@@ -277,15 +269,14 @@ public class PeerGroupTest extends TestWithPeerGroup {
         InboundMessageQueuer p2 = connectPeer(2);
         Message message = (Message)outbound(p2);
         assertNull(message == null ? "" : message.toString(), message);
-        peerGroup.stopAsync();
+        peerGroup.stop();
     }
 
     @Test
     public void transactionConfidence() throws Exception {
         // Checks that we correctly count how many peers broadcast a transaction, so we can establish some measure of
         // its trustworthyness assuming an untampered with internet connection.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
 
         final Transaction[] event = new Transaction[2];
         peerGroup.addEventListener(new AbstractPeerEventListener() {
@@ -345,10 +336,9 @@ public class PeerGroupTest extends TestWithPeerGroup {
     public void testWalletCatchupTime() throws Exception {
         // Check the fast catchup time was initialized to something around the current runtime minus a week.
         // The wallet was already added to the peer in setup.
-        final int WEEK = 86400 * 7;
-        final long now = Utils.currentTimeSeconds();
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        final int WEEK = 86400 * 3;
+        final long now = Utils.currentTimeMillis() / 1000;
+        peerGroup.startAndWait();
         assertTrue(peerGroup.getFastCatchupTimeSecs() > now - WEEK - 10000);
         Wallet w2 = new Wallet(params);
         ECKey key1 = new ECKey();
@@ -368,8 +358,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
 
     @Test
     public void noPings() throws Exception {
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         peerGroup.setPingIntervalMsec(0);
         VersionMessage versionMessage = new VersionMessage(params, 2);
         versionMessage.clientVersion = FilteredBlock.MIN_PROTOCOL_VERSION;
@@ -381,8 +370,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
 
     @Test
     public void pings() throws Exception {
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         peerGroup.setPingIntervalMsec(100);
         VersionMessage versionMessage = new VersionMessage(params, 2);
         versionMessage.clientVersion = FilteredBlock.MIN_PROTOCOL_VERSION;
@@ -400,8 +388,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
 
     @Test
     public void downloadPeerSelection() throws Exception {
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         VersionMessage versionMessage2 = new VersionMessage(params, 2);
         versionMessage2.clientVersion = FilteredBlock.MIN_PROTOCOL_VERSION;
         versionMessage2.localServices = VersionMessage.NODE_NETWORK;
@@ -433,8 +420,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
 
     @Test
     public void peerTimeoutTest() throws Exception {
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         peerGroup.setConnectTimeoutMillis(100);
 
         final SettableFuture<Void> peerConnectedFuture = SettableFuture.create();
@@ -473,8 +459,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
         });
         peerGroup.setMaxConnections(3);
         Utils.setMockSleep(true);
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
 
         handleConnectToPeer(0);
         handleConnectToPeer(1);
@@ -515,7 +500,9 @@ public class PeerGroupTest extends TestWithPeerGroup {
         stopPeerServer(2);
         assertEquals(2002, disconnectedPeers.take().getAddress().getPort()); // peer died
 
-        // Peer 2 is tried before peer 1, since it has a lower backoff due to recent success
+        // Peer 2 is tried twice before peer 1, since it has a lower backoff due to recent success
+        Utils.passMockSleep();
+        assertEquals(2002, disconnectedPeers.take().getAddress().getPort());
         Utils.passMockSleep();
         assertEquals(2002, disconnectedPeers.take().getAddress().getPort());
         Utils.passMockSleep();
@@ -527,8 +514,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
         // Cover bug 513. When a relevant transaction with a p2pubkey output is found, the Bloom filter should be
         // recalculated to include that transaction hash but not re-broadcast as the remote nodes should have followed
         // the same procedure. However a new node that's connected should get the fresh filter.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         final ECKey key = wallet.getKeys().get(0);
         // Create a couple of peers.
         InboundMessageQueuer p1 = connectPeer(1);
@@ -558,8 +544,7 @@ public class PeerGroupTest extends TestWithPeerGroup {
     @Test
     public void testBloomResendOnNewKey() throws Exception {
         // Check that when we add a new key to the wallet, the Bloom filter is re-calculated and re-sent.
-        peerGroup.startAsync();
-        peerGroup.awaitRunning();
+        peerGroup.startAndWait();
         // Create a couple of peers.
         InboundMessageQueuer p1 = connectPeer(1);
         InboundMessageQueuer p2 = connectPeer(2);

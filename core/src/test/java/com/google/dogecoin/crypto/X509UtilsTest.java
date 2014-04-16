@@ -16,7 +16,8 @@
 
 package com.google.dogecoin.crypto;
 
-import com.google.dogecoin.crypto.X509Utils;
+import com.google.reddcoin.crypto.X509Utils;
+
 import org.junit.Test;
 
 import java.security.cert.CertificateFactory;
