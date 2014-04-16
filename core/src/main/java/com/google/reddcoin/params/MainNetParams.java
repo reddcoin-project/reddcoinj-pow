@@ -28,13 +28,14 @@ public class MainNetParams extends NetworkParameters {
     public MainNetParams() {
         super();
         interval = INTERVAL;
+        newInterval = INTERVAL_NEW;
         targetTimespan = TARGET_TIMESPAN;
+        newTargetTimespan = TARGET_TIMESPAN_NEW;
         proofOfWorkLimit = Utils.decodeCompactBits(0x1e0fffffL);
          
         addressHeader = 61;
         dumpedPrivateKeyHeader = addressHeader + 128; //This is always addressHeader + 128
-        //p2shHeader = 5; //We don't have this
-        acceptableAddressCodes = new int[] { addressHeader };
+        acceptableAddressCodes = new int[] { addressHeader, p2shHeader };
         port = 45444;
         packetMagic = 0xfbc0b6db;
         genesisBlock.setDifficultyTarget(0x1e0ffff0L);
@@ -43,6 +44,9 @@ public class MainNetParams extends NetworkParameters {
         id = ID_MAINNET;
         subsidyDecreaseBlockCount = 500000;
         spendableCoinbaseDepth = 30;
+
+        diffChangeTarget = 145000;
+
         String genesisHash = genesisBlock.getHashAsString();
         checkState(genesisHash.equals("b868e0d95a3c3c0e0dadc67ee587aaf9dc8acbf99e3b4b3110fad4eb74c1decc"),
                 genesisHash);
@@ -60,6 +64,7 @@ public class MainNetParams extends NetworkParameters {
 
         dnsSeeds = new String[] {
                 "seed.egnomatics.com"
+                "seed.dogechain.info",
         };
     }
 

@@ -1,5 +1,6 @@
 /*
  * Copyright 2012 Google Inc.
+ * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -452,7 +453,8 @@ public class WalletTool {
             }
 
             setup();
-            peers.startAndWait();
+            peers.startAsync();
+            peers.awaitRunning();
             // Wait for peers to connect, the tx to be sent to one of them and for it to be propagated across the
             // network. Once propagation is complete and we heard the transaction back from all our peers, it will
             // be committed to the wallet.
@@ -536,9 +538,7 @@ public class WalletTool {
             System.out.println("Date: " + session.getDate());
             System.out.println("Memo: " + session.getMemo());
             if (session.pkiVerificationData != null) {
-                System.out.println("Pki-Verified Name: " + session.pkiVerificationData.name);
-                if (session.pkiVerificationData.orgName != null)
-                    System.out.println("Pki-Verified Org: " + session.pkiVerificationData.orgName);
+                System.out.println("Pki-Verified Name: " + session.pkiVerificationData.displayName);
                 System.out.println("PKI data verified by: " + session.pkiVerificationData.rootAuthorityName);
             }
             final Wallet.SendRequest req = session.getSendRequest();
@@ -559,7 +559,8 @@ public class WalletTool {
             ListenableFuture<PaymentSession.Ack> future = session.sendPayment(ImmutableList.of(req.tx), null, null);
             if (future == null) {
                 // No payment_url for submission so, broadcast and wait.
-                peers.startAndWait();
+                peers.startAsync();
+                peers.awaitRunning();
                 peers.broadcastTransaction(req.tx).get();
             } else {
                 PaymentSession.Ack ack = future.get();
@@ -653,7 +654,8 @@ public class WalletTool {
                 break;
 
         }
-        peers.start();
+        if (!peers.isRunning())
+            peers.startAsync();
         try {
             latch.await();
         } catch (InterruptedException e) {
@@ -701,7 +703,12 @@ public class WalletTool {
                 }
             }
         } else {
-            peers.addPeerDiscovery(new DnsDiscovery(params));
+            if (params == RegTestParams.get()) {
+                log.info("Assuming regtest node on localhost");
+                peers.addAddress(PeerAddress.localhost(params));
+            } else {
+                peers.addPeerDiscovery(new DnsDiscovery(params));
+            }
         }
     }
 
@@ -710,7 +717,8 @@ public class WalletTool {
             setup();
             int startTransactions = wallet.getTransactions(true).size();
             DownloadListener listener = new DownloadListener();
-            peers.startAndWait();
+            peers.startAsync();
+            peers.awaitRunning();
             peers.startBlockChainDownload(listener);
             try {
                 listener.await();
@@ -731,7 +739,8 @@ public class WalletTool {
     private static void shutdown() {
         try {
             if (peers == null) return;  // setup() never called so nothing to do.
-            peers.stopAndWait();
+            peers.stopAsync();
+            peers.awaitTerminated();
             saveWallet(walletFile);
             store.close();
             wallet = null;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.bitcoin.protocols.payments;
+package com.google.dogecoin.protocols.payments;
 
 import com.google.reddcoin.core.*;
 import com.google.reddcoin.params.TestNet3Params;
@@ -125,9 +125,9 @@ public class PaymentSessionTest {
     public void testPkiVerification() throws Exception {
         InputStream in = getClass().getResourceAsStream("pki_test.bitcoinpaymentrequest");
         Protos.PaymentRequest paymentRequest = Protos.PaymentRequest.newBuilder().mergeFrom(in).build();
-        MockPaymentSession paymentSession = new MockPaymentSession(paymentRequest);
-        PaymentSession.PkiVerificationData pkiData = paymentSession.verifyPki();
-        assertEquals("www.bitcoincore.org", pkiData.name);
+        PaymentProtocol.PkiVerificationData pkiData = PaymentProtocol.verifyPaymentRequestPki(paymentRequest,
+                new TrustStoreLoader.DefaultTrustStoreLoader().getKeyStore());
+        assertEquals("www.bitcoincore.org", pkiData.displayName);
         assertEquals("The USERTRUST Network, Salt Lake City, US", pkiData.rootAuthorityName);
     }
 
