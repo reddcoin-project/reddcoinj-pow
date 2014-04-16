@@ -59,6 +59,9 @@ public class PeerMonitor {
         setupGUI();
         peerGroup.start();
     }
+  
+
+
 
     private void setupNetwork() {
         params = MainNetParams.get();

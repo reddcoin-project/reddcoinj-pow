@@ -46,7 +46,9 @@ public class BriefLogFormatter extends Formatter {
     public static void initVerbose() {
         init();
         logger.setLevel(Level.ALL);
+        logger.getHandlers()[0].setLevel(Level.ALL);
         logger.log(Level.FINE, "test");
+        
     }
 
     @Override
