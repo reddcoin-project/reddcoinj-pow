@@ -1,5 +1,6 @@
 /**
  * Copyright 2013 Google Inc.
+ * Copyright 2014 Andreas Schildbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,18 +53,21 @@ public class TransactionBroadcastTest extends TestWithPeerGroup {
     @Override
     @Before
     public void setUp() throws Exception {
+        Utils.setMockClock(); // Use mock clock
         super.setUp(new MemoryBlockStore(UnitTestParams.get()));
         peerGroup.addWallet(wallet);
         // Fix the random permutation that TransactionBroadcast uses to shuffle the peers.
         TransactionBroadcast.random = new Random(0);
         peerGroup.setMinBroadcastConnections(2);
-        peerGroup.startAndWait();
+        peerGroup.startAsync();
+        peerGroup.awaitRunning();
     }
 
     @After
     public void tearDown() throws Exception {
         super.tearDown();
-        peerGroup.stopAndWait();
+        peerGroup.stopAsync();
+        peerGroup.awaitTerminated();
     }
 
     @Test

@@ -438,6 +438,25 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
         }
     }
 
+    /**
+     * <p>
+     * Disables auto-saving, after it had been enabled with
+     * {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.dogecoin.wallet.WalletFiles.Listener)}
+     * before. This method blocks until finished.
+     * </p>
+     */
+    public void shutdownAutosaveAndWait() {
+        lock.lock();
+        try {
+            WalletFiles files = vFileManager;
+            vFileManager = null;
+            checkState(files != null, "Auto saving not enabled.");
+            files.shutdownAndWait();
+        } finally {
+            lock.unlock();
+        }
+    }
+
     private void saveLater() {
         WalletFiles files = vFileManager;
         if (files != null)
@@ -2077,10 +2096,10 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
 
                 // If the key has a keyCrypter that does not match the Wallet's then a KeyCrypterException is thrown.
                 // This is done because only one keyCrypter is persisted per Wallet and hence all the keys must be homogenous.
-                if (keyCrypter != null && keyCrypter.getUnderstoodEncryptionType() != EncryptionType.UNENCRYPTED) {
-                    if (key.isEncrypted() && !keyCrypter.equals(key.getKeyCrypter())) {
-                        throw new KeyCrypterException("Cannot add key " + key.toString() + " because the keyCrypter does not match the wallets. Keys must be homogenous.");
-                    }
+                if (isEncrypted() && (!key.isEncrypted() || !keyCrypter.equals(key.getKeyCrypter()))) {
+                    throw new KeyCrypterException("Cannot add key " + key.toString() + " because the keyCrypter does not match the wallets. Keys must be homogenous.");
+                } else if (key.isEncrypted() && !isEncrypted()) {
+                    throw new KeyCrypterException("Cannot add key because it's encrypted and this wallet is not.");
                 }
                 keychain.add(key);
                 added++;
@@ -2106,7 +2125,7 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
      * Same as {@link #addWatchedAddress(Address, long)} with the current time as the creation time.
      */
     public boolean addWatchedAddress(final Address address) {
-        long now = Utils.currentTimeMillis() / 1000;
+        long now = Utils.currentTimeSeconds();
         return addWatchedAddresses(Lists.newArrayList(address), now) == 1;
     }
 
@@ -2383,8 +2402,11 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
             // Do the keys.
             builder.append("\nKeys:\n");
             for (ECKey key : keychain) {
+                final Address address = key.toAddress(params);
                 builder.append("  addr:");
-                builder.append(key.toAddress(params));
+                builder.append(address.toString());
+                builder.append(" hash160:");
+                builder.append(Utils.bytesToHexString(address.getHash160()));
                 builder.append(" ");
                 builder.append(includePrivateKeys ? key.toStringWithPrivate() : key.toString());
                 builder.append("\n");
@@ -2675,7 +2697,7 @@ public class Wallet implements Serializable, BlockChainListener, PeerFilterProvi
             for (Script script : watchedScripts)
                 earliestTime = Math.min(script.getCreationTimeSeconds(), earliestTime);
             if (earliestTime == Long.MAX_VALUE)
-                return Utils.currentTimeMillis() / 1000;
+                return Utils.currentTimeSeconds();
             return earliestTime;
         } finally {
             lock.unlock();

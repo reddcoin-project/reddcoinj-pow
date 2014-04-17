@@ -16,20 +16,28 @@
 
 package com.google.bitcoin.tools;
 
+import com.google.dogecoin.crypto.TrustStoreLoader;
+import com.google.dogecoin.protocols.payments.PaymentProtocol;
 import com.google.dogecoin.protocols.payments.PaymentRequestException;
 import com.google.dogecoin.protocols.payments.PaymentSession;
 import com.google.dogecoin.uri.BitcoinURI;
 import com.google.dogecoin.uri.BitcoinURIParseException;
+import org.bitcoin.protocols.payments.Protos;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyStoreException;
+import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import static java.lang.String.format;
 
 /** Takes a URL or bitcoin URI and prints information about the payment request. */
-public class PaymentProtocol {
+public class PaymentProtocolTool {
     public static void main(String[] args) {
         if (args.length < 1) {
             System.err.println("Provide a bitcoin URI or URL as the argument.");
@@ -42,7 +50,12 @@ public class PaymentProtocol {
         try {
             URI uri = new URI(arg);
             PaymentSession session;
-            if (uri.getScheme().equals("http")) {
+            if (arg.startsWith("/")) {
+                FileInputStream stream = new FileInputStream(arg);
+                Protos.PaymentRequest request = Protos.PaymentRequest.parseFrom(stream);
+                stream.close();
+                session = new PaymentSession(request);
+            } else if (uri.getScheme().equals("http")) {
                 session = PaymentSession.createFromUrl(arg).get();
             } else if (uri.getScheme().equals("bitcoin")) {
                 BitcoinURI bcuri = new BitcoinURI(arg);
@@ -59,9 +72,10 @@ public class PaymentProtocol {
             final int version = session.getPaymentRequest().getPaymentDetailsVersion();
             StringBuilder output = new StringBuilder(
                     format("Bitcoin payment request, version %d%nDate: %s%n", version, session.getDate()));
-            PaymentSession.PkiVerificationData pki = session.verifyPki();
+            PaymentProtocol.PkiVerificationData pki = PaymentProtocol.verifyPaymentRequestPki(
+                    session.getPaymentRequest(), new TrustStoreLoader.DefaultTrustStoreLoader().getKeyStore());
             if (pki != null) {
-                output.append(format("Signed by: %s%nIdentity verified by: %s%n", pki.name, pki.rootAuthorityName));
+                output.append(format("Signed by: %s%nIdentity verified by: %s%n", pki.displayName, pki.rootAuthorityName));
             }
             if (session.getPaymentDetails().hasExpires()) {
                 output.append(format("Expires: %s%n", new Date(session.getPaymentDetails().getExpires() * 1000)));
@@ -75,12 +89,25 @@ public class PaymentProtocol {
             System.err.println("Could not parse URI: " + e.getMessage());
         } catch (BitcoinURIParseException e) {
             System.err.println("Could not parse URI: " + e.getMessage());
+        } catch (PaymentRequestException.PkiVerificationException e) {
+            System.err.println(e.getMessage());
+            if (e.certificates != null) {
+                for (X509Certificate certificate : e.certificates) {
+                    System.err.println("  " + certificate);
+                }
+            }
         } catch (PaymentRequestException e) {
-            System.err.println("Could not handle payment URL: " + e.getMessage());
+            System.err.println("Could not handle payment request: " + e.getMessage());
         } catch (InterruptedException e) {
             System.err.println("Interrupted whilst processing/downloading.");
         } catch (ExecutionException e) {
             System.err.println("Failed whilst retrieving payment URL: " + e.getMessage());
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
             e.printStackTrace();
         }
     }
