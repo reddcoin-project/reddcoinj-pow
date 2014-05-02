@@ -29,24 +29,30 @@ import com.google.reddcoin.store.*;
 import com.google.reddcoin.uri.BitcoinURI;
 import com.google.reddcoin.uri.BitcoinURIParseException;
 import com.google.reddcoin.utils.BriefLogFormatter;
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Resources;
-import com.google.common.util.concurrent.ListenableFuture;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
-import joptsimple.OptionSpec;
-import joptsimple.util.DateConverter;
+
 import org.bitcoinj.wallet.Protos;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.spongycastle.util.encoders.Hex;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionSpec;
+import joptsimple.util.DateConverter;
+
+import org.bitcoinj.wallet.Protos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.spongycastle.util.encoders.Hex;
+
+import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.Resources;
+import com.google.common.util.concurrent.ListenableFuture;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.ParseException;
@@ -536,9 +542,7 @@ public class WalletTool {
             System.out.println("Date: " + session.getDate());
             System.out.println("Memo: " + session.getMemo());
             if (session.pkiVerificationData != null) {
-                System.out.println("Pki-Verified Name: " + session.pkiVerificationData.name);
-                if (session.pkiVerificationData.orgName != null)
-                    System.out.println("Pki-Verified Org: " + session.pkiVerificationData.orgName);
+                System.out.println("Pki-Verified Name: " + session.pkiVerificationData.displayName);
                 System.out.println("PKI data verified by: " + session.pkiVerificationData.rootAuthorityName);
             }
             final Wallet.SendRequest req = session.getSendRequest();

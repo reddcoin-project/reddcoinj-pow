@@ -1,13 +1,19 @@
-package com.google.bitcoin.examples;
-
-import com.google.bitcoin.core.*;
-import com.google.bitcoin.kits.WalletAppKit;
-import com.google.bitcoin.params.RegTestParams;
-import com.google.bitcoin.utils.BriefLogFormatter;
-import com.google.bitcoin.utils.Threading;
+package com.google.reddcoin.examples;
 
 import java.io.File;
 import java.math.BigInteger;
+
+import com.google.reddcoin.core.AbstractPeerEventListener;
+import com.google.reddcoin.core.Address;
+import com.google.reddcoin.core.Message;
+import com.google.reddcoin.core.Peer;
+import com.google.reddcoin.core.Transaction;
+import com.google.reddcoin.core.Utils;
+import com.google.reddcoin.kits.WalletAppKit;
+import com.google.reddcoin.params.RegTestParams;
+import com.google.reddcoin.utils.BriefLogFormatter;
+import com.google.reddcoin.utils.Threading;
+import com.google.reddcoin.core.Wallet;
 
 /**
  * This is a little test app that waits for a coin on a local regtest node, then  generates two transactions that double

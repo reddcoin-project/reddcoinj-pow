@@ -16,6 +16,10 @@
 
 package com.google.reddcoin.protocols.payments;
 
+
+import java.security.cert.X509Certificate;
+import java.util.List;
+
 public class PaymentRequestException extends Exception {
     public PaymentRequestException(String msg) {
         super(msg);
@@ -86,6 +90,8 @@ public class PaymentRequestException extends Exception {
     }
 
     public static class PkiVerificationException extends PaymentRequestException {
+        public List<X509Certificate> certificates;
+
         public PkiVerificationException(String msg) {
             super(msg);
         }
@@ -93,5 +99,10 @@ public class PaymentRequestException extends Exception {
         public PkiVerificationException(Exception e) {
             super(e);
         }
-    }
+
+        public PkiVerificationException(Exception e, List<X509Certificate> certificates) {
+            super(e);
+            this.certificates = certificates;
+        }
+}
 }

@@ -15,7 +15,9 @@
 package com.google.reddcoin.protocols.payments;
 
 import com.google.reddcoin.core.*;
+import com.google.reddcoin.crypto.TrustStoreLoader;
 import com.google.reddcoin.params.MainNetParams;
+import com.google.reddcoin.protocols.payments.PaymentProtocol.PkiVerificationData;
 import com.google.reddcoin.script.ScriptBuilder;
 import com.google.reddcoin.uri.BitcoinURI;
 import com.google.reddcoin.utils.Threading;
@@ -24,9 +26,11 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+
 import org.bitcoin.protocols.payments.Protos;
 
 import javax.annotation.Nullable;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.net.*;

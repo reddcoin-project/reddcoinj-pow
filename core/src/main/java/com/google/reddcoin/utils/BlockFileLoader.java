@@ -53,8 +53,9 @@ public class BlockFileLoader implements Iterable<Block>, Iterator<Block> {
         String defaultDataDir;
         String OS = System.getProperty("os.name").toLowerCase();
         if (OS.indexOf("win") >= 0) {
+            defaultDataDir = System.getenv("APPDATA") + "\\.reddcoin\\blocks\\";
         } else if (OS.indexOf("mac") >= 0 || (OS.indexOf("darwin") >= 0)) {
-            defaultDataDir = System.getProperty("user.home") + "/Library/Application Support/Dogecoin/blocks/";
+            defaultDataDir = System.getProperty("user.home") + "/Library/Application Support/Reddcoin/blocks/";
         } else {
             defaultDataDir = System.getProperty("user.home") + "/.reddcoin/blocks/";
         }

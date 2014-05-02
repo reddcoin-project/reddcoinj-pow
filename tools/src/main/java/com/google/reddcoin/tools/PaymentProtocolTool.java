@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.bitcoin.tools;
+package com.google.reddcoin.tools;
 
+import com.google.reddcoin.crypto.TrustStoreLoader;
+import com.google.reddcoin.protocols.payments.PaymentProtocol;
 import com.google.reddcoin.protocols.payments.PaymentRequestException;
 import com.google.reddcoin.protocols.payments.PaymentSession;
 import com.google.reddcoin.uri.BitcoinURI;
 import com.google.reddcoin.uri.BitcoinURIParseException;
+
 import org.bitcoin.protocols.payments.Protos;
 
 import java.io.FileInputStream;

@@ -21,10 +21,12 @@ import com.google.reddcoin.script.ScriptBuilder;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -171,7 +173,7 @@ public class Block extends Message {
      * </p>
      */
     public BigInteger getBlockInflation(int height) {
-        return Utils.toNanoCoins(50, 0).shiftRight(height / params.getSubsidyDecreaseBlockCount());
+        return GetBlockReward(height);
     }
 
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
@@ -1105,5 +1107,34 @@ public class Block extends Message {
     @VisibleForTesting
     boolean isTransactionBytesValid() {
         return transactionBytesValid;
+    }
+    
+    public final BigInteger GetBlockReward(int height)
+    {
+        int COIN = 1;
+        BigInteger nSubsidy = Utils.toNanoCoins(100000, 0);
+
+        if(height < 11)
+        {
+            nSubsidy = Utils.toNanoCoins(545000000, 0);
+        }
+        else if(height < 10000)
+        {
+            nSubsidy = Utils.toNanoCoins(300000, 0); //2
+        }
+        else if(height < 20000)
+        {
+            nSubsidy = Utils.toNanoCoins(200000, 0); //2
+        }
+        else if(height < 30000)
+        {
+            nSubsidy = Utils.toNanoCoins(150000, 0); //5
+        }
+        else if(height >= 140000){
+        	
+        	nSubsidy = nSubsidy.shiftRight((height-140000 + 50000) / 50000);
+        	
+        }
+        return nSubsidy;
     }
 }

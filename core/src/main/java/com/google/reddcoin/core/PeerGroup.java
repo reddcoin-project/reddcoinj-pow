@@ -686,7 +686,7 @@ public class PeerGroup extends AbstractExecutionThreadService implements Transac
     protected void startUp() throws Exception {
         // This is run in a background thread by the Service implementation.
         vPingTimer = new Timer("Peer pinging thread", true);
-        channels.startAndWait();
+        channels.startAsync();
         channels.awaitRunning();
         triggerConnections();
     }

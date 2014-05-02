@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+package com.google.reddcoin.tools;
 
 import com.google.reddcoin.core.*;
 import com.google.reddcoin.params.MainNetParams;
@@ -115,11 +116,6 @@ public class BuildCheckpoints {
         checkState(test.getHeader().getHashAsString().equals("5bd1edbf240d4bcfc018e9651f7fe0476e7f1adef410ca841f87fc5439a73458"));
             checkState(test.getHeader().getHashAsString()
                     .equals("8335a8d29326c09f35efe982e640b834e383db26e770d0fdbedabc718fb89272"));
-        } else if (PARAMS.getId() == NetworkParameters.ID_TESTNET) { // FIXME
-            StoredBlock test = manager.getCheckpointBefore(1390500000); // Thu Jan 23 19:00:00 CET 2014
-            checkState(test.getHeight() == 167328);
-            checkState(test.getHeader().getHashAsString().equals("000000000000002e00a243fe9aa49c78f573091d17372c2ae0ae5e0f24f55b52"));
-        }
 
         System.out.println("Checkpoints written to '" + CHECKPOINTS_FILE.getCanonicalPath() + "'.");
     }

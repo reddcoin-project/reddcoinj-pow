@@ -474,6 +474,10 @@ public class Utils {
         return mockTime;
     }
 
+    public static long currentTimeSeconds() {
+        return currentTimeMillis() / 1000;
+    }
+
     /**
      * Sets the mock clock to the given time (in seconds)
      */
