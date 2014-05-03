@@ -112,10 +112,8 @@ public class BuildCheckpoints {
         checkState(manager.numCheckpoints() == checkpoints.size());
         StoredBlock test = manager.getCheckpointBefore(1392660140);  // Just after block 4571
         System.out.println("Height is " + test.getHeight());
-        checkState(test.getHeight() == 21750);
-        checkState(test.getHeader().getHashAsString().equals("5bd1edbf240d4bcfc018e9651f7fe0476e7f1adef410ca841f87fc5439a73458"));
-            checkState(test.getHeader().getHashAsString()
-                    .equals("8335a8d29326c09f35efe982e640b834e383db26e770d0fdbedabc718fb89272"));
+        checkState(test.getHeight() == 21648);
+        checkState(test.getHeader().getHashAsString().equals("d8e660edff492e96da1aced87115fa796eeba5ef3f29318819c4b909b23c65bf"));
 
         System.out.println("Checkpoints written to '" + CHECKPOINTS_FILE.getCanonicalPath() + "'.");
     }

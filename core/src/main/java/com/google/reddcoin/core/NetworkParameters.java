@@ -122,7 +122,7 @@ public abstract class NetworkParameters implements Serializable {
         return genesisBlock;
     }
 
-    public static final int TARGET_TIMESPAN = (int)(1 * 60);  // 4h per difficulty cycle, on average.
+    public static final int TARGET_TIMESPAN = (int)(60);  // 60s per difficulty cycle, on average.
     public static final int TARGET_TIMESPAN_NEW = (int)(60);  // 60s per difficulty cycle, on average. Kicks in after block 145k.
     public static final int TARGET_SPACING = (int)(1 * 60);  // 1 minutes per block.
     public static final int INTERVAL = TARGET_TIMESPAN / TARGET_SPACING;
